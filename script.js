@@ -3,6 +3,7 @@ const root = document.documentElement;
 const menu = document.querySelector("[data-menu]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const themeToggle = document.querySelector("[data-theme-toggle]");
+const sectionLinks = Array.from(document.querySelectorAll('.site-nav a[href^="#"]'));
 
 const storedTheme = localStorage.getItem("appeal-theme");
 const systemPrefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -61,6 +62,39 @@ if (themeToggle) {
     localStorage.setItem("appeal-theme", root.dataset.theme);
     updateThemeButton();
   });
+}
+
+if (sectionLinks.length) {
+  const sections = sectionLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+
+  const setActiveLink = (id) => {
+    sectionLinks.forEach((link) => {
+      const isActive = link.getAttribute("href") === `#${id}`;
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visible) setActiveLink(visible.target.id);
+    },
+    {
+      rootMargin: "-28% 0px -55%",
+      threshold: [0.18, 0.32, 0.5],
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
 }
 
 document.querySelectorAll("[data-copy-target]").forEach((button) => {
