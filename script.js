@@ -4,6 +4,11 @@ const menu = document.querySelector("[data-menu]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const sectionLinks = Array.from(document.querySelectorAll('.site-nav a[href^="#"]'));
+const currentDate = document.querySelector("[data-current-date]");
+const newsStrip = document.querySelector("[data-news-strip]");
+const newsLabel = document.querySelector("[data-news-label]");
+const masthead = document.querySelector(".issue-masthead");
+const topStories = document.querySelector("[data-top-stories]");
 
 const storedTheme = localStorage.getItem("appeal-theme");
 const systemPrefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -18,13 +23,57 @@ const updateThemeButton = () => {
 
 updateThemeButton();
 
+const getHeaderOffset = () => {
+  const height = header?.offsetHeight || 72;
+  const newsbarHeight = newsStrip?.offsetHeight || 0;
+  root.style.setProperty("--header-height", `${height}px`);
+  return height + newsbarHeight + 18;
+};
+
+const formatIssueDate = () => {
+  if (!currentDate) return;
+  currentDate.textContent = new Intl.DateTimeFormat("en", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date());
+};
+
+const updateNewsLabel = () => {
+  if (!newsStrip || !newsLabel) return;
+  const lastUpdated = new Date(newsStrip.dataset.lastUpdated);
+  if (Number.isNaN(lastUpdated.getTime())) return;
+
+  const ageInHours = (Date.now() - lastUpdated.getTime()) / 36e5;
+  if (ageInHours <= 36) {
+    newsLabel.textContent = "Breaking";
+    newsStrip.dataset.status = "breaking";
+  } else if (ageInHours <= 168) {
+    newsLabel.textContent = "Latest";
+    newsStrip.dataset.status = "latest";
+  } else {
+    newsLabel.textContent = "Archive";
+    newsStrip.dataset.status = "archive";
+  }
+};
+
+formatIssueDate();
+updateNewsLabel();
+
 if (header) {
   const updateHeader = () => {
+    getHeaderOffset();
     header.classList.toggle("is-scrolled", window.scrollY > 12);
+    if (masthead) {
+      const mastheadBottom = masthead.offsetTop + masthead.offsetHeight;
+      header.classList.toggle("show-brand", window.scrollY > mastheadBottom - header.offsetHeight);
+    }
   };
 
   updateHeader();
   window.addEventListener("scroll", updateHeader, { passive: true });
+  window.addEventListener("resize", updateHeader);
 }
 
 const closeMenu = () => {
@@ -80,21 +129,69 @@ if (sectionLinks.length) {
     });
   };
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  const updateActiveSection = () => {
+    const marker = window.scrollY + getHeaderOffset() + 2;
+    const active = sections.reduce((current, section) => {
+      return section.offsetTop <= marker ? section : current;
+    }, sections[0]);
 
-      if (visible) setActiveLink(visible.target.id);
-    },
-    {
-      rootMargin: "-28% 0px -55%",
-      threshold: [0.18, 0.32, 0.5],
-    }
-  );
+    if (active) setActiveLink(active.id);
+  };
 
-  sections.forEach((section) => observer.observe(section));
+  sectionLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const target = document.querySelector(link.getAttribute("href"));
+      if (!target) return;
+
+      event.preventDefault();
+      closeMenu();
+      window.scrollTo({
+        top: Math.max(0, target.offsetTop - getHeaderOffset()),
+        behavior: "smooth",
+      });
+      setActiveLink(target.id);
+    });
+  });
+
+  updateActiveSection();
+  window.addEventListener("scroll", updateActiveSection, { passive: true });
+  window.addEventListener("resize", updateActiveSection);
+}
+
+if (topStories) {
+  const slides = Array.from(topStories.querySelectorAll("[data-story-slide]"));
+  const prevButton = topStories.querySelector("[data-story-prev]");
+  const nextButton = topStories.querySelector("[data-story-next]");
+  const dotsContainer = topStories.querySelector("[data-story-dots]");
+  let activeStory = Math.max(0, slides.findIndex((slide) => slide.classList.contains("is-active")));
+
+  const dots = slides.map((_, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute("aria-label", `Show top story ${index + 1}`);
+    button.addEventListener("click", () => setActiveStory(index));
+    dotsContainer?.append(button);
+    return button;
+  });
+
+  const setActiveStory = (index) => {
+    activeStory = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === activeStory;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", String(!isActive));
+    });
+    dots.forEach((dot, dotIndex) => {
+      dot.setAttribute("aria-current", String(dotIndex === activeStory));
+    });
+  };
+
+  if (slides.length > 1) {
+    topStories.classList.add("is-slider-ready");
+    prevButton?.addEventListener("click", () => setActiveStory(activeStory - 1));
+    nextButton?.addEventListener("click", () => setActiveStory(activeStory + 1));
+    setActiveStory(activeStory);
+  }
 }
 
 document.querySelectorAll("[data-copy-target]").forEach((button) => {

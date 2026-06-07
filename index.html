@@ -6,21 +6,29 @@
     <meta name="robots" content="noindex, nofollow">
     <meta
       name="description"
-      content="Appeal of AI is a home for AI-native art, identity, digital presence, and the cultural signals around intelligent systems."
+      content="Appeal of AI is an editorial front page for AI-native art, culture, identity and the signals around intelligent systems."
     >
     <title>appealofai</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header" data-header aria-label="Site header">
+    <header class="site-header" data-header data-compact-brand aria-label="Site header">
       <a class="brand" href="index.html" aria-label="Appeal of AI home">
-        <img class="brand-mark" src="assets/img/logo.svg" alt="">
-        <span class="brand-name">appealofai</span>
+        <img class="brand-emblem" src="assets/img/logo.svg" alt="">
+        <span>appealofai</span>
       </a>
       <div class="header-actions">
         <button class="icon-button" type="button" data-theme-toggle aria-label="Toggle light mode">
-          <span class="theme-icon" aria-hidden="true"></span>
+          <span class="theme-icon" aria-hidden="true">
+            <svg class="moon-icon" viewBox="0 0 24 24" focusable="false">
+              <path d="M20 15.7A8.5 8.5 0 0 1 8.3 4a7 7 0 1 0 11.7 11.7Z"></path>
+            </svg>
+            <svg class="sun-icon" viewBox="0 0 24 24" focusable="false">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"></path>
+            </svg>
+          </span>
         </button>
         <button
           class="icon-button menu-button"
@@ -34,89 +42,235 @@
         </button>
       </div>
       <nav class="site-nav" id="site-menu" data-menu aria-label="Primary navigation">
-        <a href="#art">Art</a>
-        <a href="#identity">Identity</a>
-        <a href="#signals">Signals</a>
-        <a href="#studio">Studio</a>
+        <a href="#latest">Front Page</a>
+        <a href="#briefs">Briefs</a>
+        <a href="#essays">Essays</a>
+        <a href="#polls">Polls</a>
+        <a href="#sources">Sources</a>
       </nav>
     </header>
 
+    <noscript>
+      <div class="no-js-banner">
+        JavaScript is off. Reading works normally; theme switching and active section highlighting are disabled.
+      </div>
+    </noscript>
+
+    <div class="newsbar" data-news-strip data-last-updated="2026-06-07T12:00:00Z" aria-label="Latest news">
+      <strong data-news-label>Latest</strong>
+      <div class="ticker-track">
+        <span>Image models become creative infrastructure</span>
+        <span>Agents move from demos into daily workflows</span>
+        <span>Identity turns into a generated surface</span>
+        <span>AI culture is now a public argument</span>
+        <span>Image models become creative infrastructure</span>
+        <span>Agents move from demos into daily workflows</span>
+        <span>Identity turns into a generated surface</span>
+        <span>AI culture is now a public argument</span>
+      </div>
+    </div>
+
     <main id="main">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow">Feel the appeal.</p>
-          <h1 id="hero-title">Appeal of AI</h1>
-          <p class="lede">
-            AI-native art, identity systems and digital presence for a world
-            learning to see with machines.
-          </p>
+      <section class="hero newspaper-hero" aria-labelledby="hero-title">
+        <div class="issue-masthead">
+          <div class="masthead-topline" aria-label="Issue notes">
+            <span>Notes on intelligence in public.</span>
+            <span>Edition 001</span>
+          </div>
+          <img src="assets/img/logo-with-name.svg" alt="appealofai">
+          <p>Independent AI Gazette . Art, Culture, Identity, Machines</p>
         </div>
-        <div class="hero-mark" aria-hidden="true">
-          <img src="assets/img/logo.svg" alt="">
+        <div class="paper-meta" aria-label="Publication details">
+          <span data-current-date>Sunday, June 7, 2026</span>
+          <span>Front Page</span>
+          <span>appealofai.sol</span>
+        </div>
+        <section class="top-stories" data-top-stories aria-label="Top stories">
+          <div class="top-stories-head">
+            <p class="section-label">Top Stories</p>
+            <div class="story-controls" aria-label="Top story controls">
+              <button type="button" data-story-prev aria-label="Previous top story">
+                <span aria-hidden="true">&lt;</span>
+              </button>
+              <button type="button" data-story-next aria-label="Next top story">
+                <span aria-hidden="true">&gt;</span>
+              </button>
+            </div>
+          </div>
+          <div class="story-track">
+            <article class="top-story-card is-active" data-story-slide>
+              <span>Lead</span>
+              <h2>AI culture is becoming a public infrastructure question.</h2>
+              <p>
+                Dummy copy: The week’s main story connects releases, regulation,
+                creative tools and the social layer around machine intelligence.
+              </p>
+            </article>
+            <article class="top-story-card" data-story-slide>
+              <span>Visual Desk</span>
+              <h2>The image model is now part camera, part studio, part memory.</h2>
+              <p>
+                Dummy copy: A visual essay format for artifacts, defaults, taste,
+                identity and the new grammar of synthetic images.
+              </p>
+            </article>
+            <article class="top-story-card" data-story-slide>
+              <span>Briefing</span>
+              <h2>Agents are moving from impressive demos into ordinary routines.</h2>
+              <p>
+                Dummy copy: A concise brief for what changed, what is still brittle
+                and what deserves attention beyond the launch post.
+              </p>
+            </article>
+          </div>
+          <div class="story-dots" data-story-dots aria-label="Choose top story"></div>
+        </section>
+        <div class="frontpage-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Feel the appeal.</p>
+            <h1 id="hero-title">Appeal of AI</h1>
+            <p class="lede">
+              A small newspaper for AI-native art, culture, identity and the
+              strange public life of intelligent systems.
+            </p>
+          </div>
+          <aside class="hero-mark" aria-label="Current issue">
+            <img src="assets/img/logo.svg" alt="">
+            <p>Today's front page is a prototype issue with dummy stories, formats and source notes.</p>
+          </aside>
         </div>
       </section>
 
-      <section class="intro section" id="studio">
-        <p class="section-label">Studio</p>
-        <div class="split">
-          <h2>Images, language and identity are becoming one surface.</h2>
-          <p>
-            Appeal of AI explores that surface: the visual systems, names,
-            signals and rituals that appear when artificial intelligence becomes
-            part of how people create, present themselves and read the world.
-          </p>
+      <section class="section front-page" id="latest">
+        <div class="section-heading">
+          <p class="section-label">Latest</p>
+          <h2>The lead story goes here.</h2>
+        </div>
+        <div class="front-grid">
+          <article class="lead-story">
+            <span>Lead Brief</span>
+            <h3>The next wave of AI tools is less about novelty and more about authorship.</h3>
+            <p>
+              Dummy copy: A concise report on a current release, product shift or
+              cultural debate. The website version keeps the source trail, context
+              and follow-up notes; the X version becomes the public hook.
+            </p>
+            <footer>Brief . 4 min . Sources linked</footer>
+          </article>
+          <article class="news-card">
+            <span>Watchlist</span>
+            <h3>Three signals to watch this week.</h3>
+            <p>Model behavior, creator workflows and the language people use when tools become normal.</p>
+          </article>
+          <article class="news-card">
+            <span>Visual Desk</span>
+            <h3>A generated image is also a design decision.</h3>
+            <p>Notes on taste, defaults, artifacts and the difference between output and direction.</p>
+          </article>
+          <article class="news-card">
+            <span>Archive</span>
+            <h3>What changed after the hype moved on?</h3>
+            <p>A reusable format for revisiting claims, launches and predictions after a few months.</p>
+          </article>
         </div>
       </section>
 
-      <section class="section fields" id="art" aria-label="Areas of focus">
+      <section class="section fields" id="briefs" aria-label="Editorial formats">
+        <div class="section-heading">
+          <p class="section-label">Briefs</p>
+          <h2>Short dispatches before they become essays.</h2>
+        </div>
         <article>
           <span>01</span>
-          <h3>AI-native art</h3>
-          <p>Image studies, visual experiments and art direction shaped with models, prompts and taste.</p>
+          <h3>Briefs</h3>
+          <p>Fast notes on current developments. Ideal for X hooks, short threads and weekly updates.</p>
         </article>
         <article>
           <span>02</span>
-          <h3>Visual language</h3>
-          <p>Color, type, symbols and atmosphere translated into a coherent digital signature.</p>
+          <h3>Essays</h3>
+          <p>Arguments with a point of view. These should live on the site first and be summarized on X.</p>
         </article>
         <article>
           <span>03</span>
-          <h3>Presence systems</h3>
-          <p>Small artifacts that make a project recognizable across web, feed, avatar and archive.</p>
+          <h3>Studies</h3>
+          <p>Visual experiments, prompt notes, identity studies and artifacts from AI-native production.</p>
         </article>
       </section>
 
-      <section class="section identity" id="identity">
-        <p class="section-label">Identity</p>
-        <div class="split">
-          <h2>A name, a mark, a domain, a mood.</h2>
-          <p>
-            The project treats identity as an interface: a way for work to be
-            remembered before it is explained. This space will collect logos,
-            visual systems, AI studies and fragments of brand language as they
-            develop.
-          </p>
+      <section class="section essay-section" id="essays">
+        <div class="section-heading">
+          <p class="section-label">Essays</p>
+          <h2>Opinionated, sourced, slower than the feed.</h2>
+        </div>
+        <div class="signal-panel">
+          <div>
+            <h3>The editorial page is where the argument becomes visible.</h3>
+            <p>
+              Dummy copy: Essays should be more than updates. They should make a
+              claim, show sources, take a position and remain useful after the
+              timeline has moved on.
+            </p>
+          </div>
+          <span class="text-note">Opinion . Analysis . Source notes</span>
         </div>
       </section>
 
-      <section class="section signal" id="signals">
-        <p class="section-label">Signals</p>
+      <section class="section poll-section" id="polls">
+        <div class="section-heading">
+          <p class="section-label">Polls</p>
+          <h2>Questions for the timeline, interpreted in the archive.</h2>
+        </div>
+        <div class="poll-card">
+          <p class="poll-question">Would you trust an AI-generated image more if the process was documented?</p>
+          <div class="poll-options" aria-label="Example poll results">
+            <span style="--value: 62%">Yes, context matters <strong>62%</strong></span>
+            <span style="--value: 24%">Only sometimes <strong>24%</strong></span>
+            <span style="--value: 14%">No, output is enough <strong>14%</strong></span>
+          </div>
+          <p class="poll-note">Dummy poll: publish the question on X, then post the result and interpretation here.</p>
+        </div>
+      </section>
+
+      <section class="section sources-section" id="sources">
+        <div class="section-heading">
+          <p class="section-label">Sources</p>
+          <h2>Every serious piece should show its trail.</h2>
+        </div>
+        <div class="source-grid">
+          <article>
+            <h3>Inline references</h3>
+            <p>Use numbered footnotes in article text for claims, quotes, reports and primary sources.</p>
+          </article>
+          <article>
+            <h3>Source list</h3>
+            <p>End each article with a short source section: official docs, papers, posts, datasets or interviews.</p>
+          </article>
+          <article>
+            <h3>X companion</h3>
+            <p>X posts should link back to the website version when sources, nuance or updates matter.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section signal" id="about">
+        <p class="section-label">About</p>
         <div class="signal-panel">
           <div>
-            <h2>Editorial fragments, visual studies and long-form notes.</h2>
+            <h2>A classic editorial object for machine-age culture.</h2>
             <p>
-              A slower layer for ideas that should not disappear into the feed:
-              observations on image models, creative identity, tools, aesthetics
-              and the culture forming around artificial intelligence.
+              Appeal of AI treats the website as the edition of record and X as
+              the distribution layer. The look should feel like a small paper:
+              authoritative, opinionated, careful with sources and visually
+              memorable.
             </p>
           </div>
-          <span class="text-note">First signal in preparation</span>
+          <span class="text-note">Personal opinion. No financial advice. DYOR.</span>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span>appealofai.sol</span>
+      <span>appealofai.sol . Personal opinion only . Not financial advice . DYOR</span>
       <nav aria-label="Legal navigation">
         <a href="legal.html">Legal</a>
         <a href="terms.html">Terms</a>
