@@ -1,0 +1,49 @@
+APPEALOFAI CONTENT - SIMPLE VERSION
+
+What the website reads automatically:
+
+- content/articles.json
+
+The notes ticker uses this file. Each item can provide:
+
+- title
+- tickerTitle
+- summary
+- date
+- updated
+- url
+- image
+- tags
+- xPost
+
+What the website does NOT read automatically yet:
+
+- content/drafts/*.txt
+- content/drafts/*.sources.txt
+- content/drafts/*.x.txt
+
+Those files are your writing workspace.
+
+Recommended workflow:
+
+1. Write the long draft in:
+   content/drafts/example-title.txt
+
+2. Put source links and claim notes in:
+   content/drafts/example-title.sources.txt
+
+3. Put the X companion post in:
+   content/drafts/example-title.x.txt
+
+4. Add the short public metadata to:
+   content/articles.json
+
+5. When the article is ready, create or update the matching HTML article page.
+
+Current best strategy:
+
+- Keep the website static.
+- Keep the navigation small: Journal, Briefs, About.
+- Use articles.json for public lists and ticker text.
+- Use drafts/ as your private editorial workspace.
+- Add automation later only when publishing becomes repetitive.

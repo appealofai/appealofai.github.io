@@ -1,0 +1,75 @@
+{
+  "updated": "2026-06-08T12:00:00Z",
+  "items": [
+    {
+      "id": "ai-culture-public-imagination",
+      "status": "published",
+      "type": "lead",
+      "date": "2026-06-08",
+      "updated": "2026-06-08T12:00:00Z",
+      "title": "AI culture is becoming a public imagination problem.",
+      "tickerTitle": "AI culture is now a public argument",
+      "summary": "A weekly field note connecting model launches, regulation, creative tools and public language around machine intelligence.",
+      "url": "articles/first-signal.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["culture", "identity", "policy"],
+      "xPost": "AI culture is no longer just a technology story. It is becoming a public imagination problem: tools, rights, images, identity and power in one strange new surface."
+    },
+    {
+      "id": "image-models-identity-infrastructure",
+      "status": "draft",
+      "type": "brief",
+      "date": "2026-06-08",
+      "updated": "2026-06-08T10:30:00Z",
+      "title": "Image models are becoming identity infrastructure.",
+      "tickerTitle": "Image models become identity infrastructure",
+      "summary": "A short visual desk note about style, memory, profile images and generated presence.",
+      "url": "articles/article-template.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["images", "identity", "visuals"],
+      "xPost": "Image models are becoming identity infrastructure: not just pictures, but profile surfaces, memory machines and style systems."
+    },
+    {
+      "id": "agents-daily-workflows",
+      "status": "draft",
+      "type": "brief",
+      "date": "2026-06-07",
+      "updated": "2026-06-07T18:00:00Z",
+      "title": "Agents are moving from impressive demos into ordinary routines.",
+      "tickerTitle": "Agents move from demos into daily workflows",
+      "summary": "A practical note about when delegation helps, when it fails and why interfaces matter.",
+      "url": "articles/article-template.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["agents", "workflows", "interfaces"],
+      "xPost": "Agents become interesting when they leave the demo and enter the routine. The question is not magic. It is delegation, friction and trust."
+    },
+    {
+      "id": "ai-search-source-links",
+      "status": "draft",
+      "type": "brief",
+      "date": "2026-06-07",
+      "updated": "2026-06-07T14:00:00Z",
+      "title": "AI search puts source links back in the spotlight.",
+      "tickerTitle": "AI search puts source links back in the spotlight",
+      "summary": "A source-first brief about attribution, summaries and why links still matter.",
+      "url": "articles/article-template.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["search", "sources", "attribution"],
+      "xPost": "AI search makes source trails feel newly important. Summaries are useful, but the link is still where context, responsibility and trust begin."
+    },
+    {
+      "id": "creator-style-protection",
+      "status": "draft",
+      "type": "brief",
+      "date": "2026-06-06",
+      "updated": "2026-06-06T16:00:00Z",
+      "title": "Creator style protection enters the policy debate.",
+      "tickerTitle": "Creator style protection enters the policy debate",
+      "summary": "A rights note about likeness, style, opt-outs and the culture around protection.",
+      "url": "articles/article-template.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["rights", "style", "creators"],
+      "xPost": "The style question is becoming a policy question: what can be protected, what can be referenced and what creators need from AI systems."
+    }
+  ]
+}
