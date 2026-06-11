@@ -1,41 +1,41 @@
 {
-  "updated": "2026-06-10T12:00:00Z",
+  "updated": "2026-06-11T16:00:00Z",
   "items": [
     {
-      "id": "messi-openai-football-campaign",
+      "id": "claude-fable-safeguards",
       "status": "published",
-      "type": "watch",
-      "date": "2026-06-10",
-      "updated": "2026-06-10T21:36:00Z",
-      "title": "Messi and OpenAI turn fan identity into an image prompt.",
-      "tickerTitle": "Messi and OpenAI turn fan identity into an image prompt",
-      "summary": "A watch note on the reported Messi x OpenAI campaign and why sports identity is an obvious stage for generative images.",
-      "url": "articles/messi-openai-football-campaign.html",
+      "type": "opinion",
+      "date": "2026-06-11",
+      "updated": "2026-06-11T16:00:00Z",
+      "title": "Claude Fable 5 makes the model release feel like a governance story.",
+      "tickerTitle": "Claude Fable 5 turns safeguards into the story",
+      "summary": "A field note on why the newest Claude coverage is not only about capability, but about what kind of trust a model tries to earn.",
+      "url": "articles/first-signal.html",
       "image": "assets/img/social-card.png",
-      "tags": ["openai", "messi", "images", "culture", "sports"],
+      "tags": ["claude", "models", "safety", "trust"],
       "sources": [
-        "https://timesofindia.indiatimes.com/technology/tech-news/chatgpt-gives-lionel-messi-argentina-makeover-how-fans-can-get-the-same-look/articleshow/131639463.cms"
+        "https://www.anthropic.com/news",
+        "https://www.theverge.com/news/946725/anthropic-releases-claude-fable-5-mythos"
       ],
-      "xPost": "If Messi x OpenAI is the first global football season of the AI era, the interesting part is not the haircut. It is fan identity becoming editable media: colors, loyalty, image prompts, and culture as a shared generative surface."
+      "xPost": "A frontier model launch is no longer only a capability story. The sharper signal is the trust wrapper: access, refusals, safeguards, and the public performance of control."
     },
     {
-      "id": "ai-slop-social-text-fatigue",
+      "id": "ai-upside-needs-public-deal",
       "status": "published",
-      "type": "lead",
-      "date": "2026-06-10",
-      "updated": "2026-06-10T18:20:00Z",
-      "title": "AI slop is making the public internet feel tired.",
-      "tickerTitle": "AI slop makes the public internet feel tired",
-      "summary": "A personal note on synthetic comments, generic article filler and why people can feel when language has no witness behind it.",
-      "url": "articles/ai-slop-social-text-fatigue.html",
+      "type": "opinion",
+      "date": "2026-06-11",
+      "updated": "2026-06-11T16:00:00Z",
+      "title": "The AI upside needs a public deal.",
+      "tickerTitle": "The AI upside needs a public deal",
+      "summary": "A personal note on AI, work, public upside and why the appeal of the technology depends on how broadly its gains are shared.",
+      "url": "articles/ai-upside-needs-public-deal.html",
       "image": "assets/img/social-card.png",
-      "tags": ["culture", "social-media", "ai-slop", "writing"],
+      "tags": ["jobs", "policy", "culture", "public-upside"],
       "sources": [
-        "https://en.wikipedia.org/wiki/AI_slop",
-        "https://www.fastcompany.com/91330702/what-is-ai-slop",
-        "https://www.theguardian.com/technology/article/2024/aug/20/techscape-ai-generated-art-slop-facebook-shrimp-jesus"
+        "https://darioamodei.com/the-adolescence-of-technology",
+        "https://www.anthropic.com/economic-index"
       ],
-      "xPost": "AI slop is not annoying because people use tools. It is annoying because the output has no witness behind it. The comment sounds like a comment. The article sounds like an article. But nothing human has actually happened there."
+      "xPost": "The appeal of AI gets weaker if the upside feels privately captured and publicly imposed. The public deal matters: access, education, worker mobility, provenance, creator rights, and useful transparency."
     },
     {
       "id": "anthropic-adolescence-of-technology",
@@ -56,22 +56,23 @@
       "xPost": "The useful part of Anthropic's adolescence frame is not the drama. It is the admission that AI is powerful, immature and already changing the room. That is exactly the phase where confidence is easy and judgment matters."
     },
     {
-      "id": "claude-fable-safeguards",
+      "id": "ai-slop-social-text-fatigue",
       "status": "published",
-      "type": "lead",
+      "type": "opinion",
       "date": "2026-06-10",
-      "updated": "2026-06-10T12:00:00Z",
-      "title": "Claude Fable 5 makes the model release feel like a governance story.",
-      "tickerTitle": "Claude Fable 5 turns safeguards into the story",
-      "summary": "A field note on why the newest Claude coverage is not only about capability, but about what kind of trust a model tries to earn.",
-      "url": "articles/first-signal.html",
+      "updated": "2026-06-11T15:40:00Z",
+      "title": "AI slop is exhausting the public internet.",
+      "tickerTitle": "AI slop is exhausting the public internet",
+      "summary": "A personal note on synthetic comments, generic article filler and why people can feel when language has no witness behind it.",
+      "url": "articles/ai-slop-social-text-fatigue.html",
       "image": "assets/img/social-card.png",
-      "tags": ["claude", "models", "safety", "trust"],
+      "tags": ["culture", "social-media", "ai-slop", "writing"],
       "sources": [
-        "https://www.anthropic.com/news",
-        "https://www.theverge.com/news/946725/anthropic-releases-claude-fable-5-mythos"
+        "https://en.wikipedia.org/wiki/AI_slop",
+        "https://www.fastcompany.com/91330702/what-is-ai-slop",
+        "https://www.theguardian.com/technology/article/2024/aug/20/techscape-ai-generated-art-slop-facebook-shrimp-jesus"
       ],
-      "xPost": "The interesting part of a frontier model release is no longer just capability. It is the shape of the guardrails around it. Claude Fable 5 reads like that moment: power, price, safeguards, and the public performance of trust."
+      "xPost": "AI slop is exhausting because it has the shape of participation without the weight of having participated. The better line is taste: use the tool, but leave a fingerprint."
     },
     {
       "id": "grok-build-terminal-agent",
@@ -90,6 +91,23 @@
         "https://docs.x.ai/"
       ],
       "xPost": "Grok Build is less interesting as a single CLI and more interesting as a signal: coding agents are becoming platform surfaces. Chat is not enough. The model wants the repo, the terminal, the plan, the diff, the review."
+    },
+    {
+      "id": "messi-openai-football-campaign",
+      "status": "published",
+      "type": "watch",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T21:36:00Z",
+      "title": "Messi and OpenAI turn fan identity into an image prompt.",
+      "tickerTitle": "Messi and OpenAI turn fan identity into an image prompt",
+      "summary": "A watch note on the reported Messi x OpenAI campaign and why sports identity is an obvious stage for generative images.",
+      "url": "articles/messi-openai-football-campaign.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["openai", "messi", "images", "culture", "sports"],
+      "sources": [
+        "https://timesofindia.indiatimes.com/technology/tech-news/chatgpt-gives-lionel-messi-argentina-makeover-how-fans-can-get-the-same-look/articleshow/131639463.cms"
+      ],
+      "xPost": "If Messi x OpenAI is the first global football season of the AI era, the interesting part is not the haircut. It is fan identity becoming editable media: colors, loyalty, image prompts, and culture as a shared generative surface."
     },
     {
       "id": "apple-intelligence-naming-trap",

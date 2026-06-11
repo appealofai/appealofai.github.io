@@ -8,8 +8,6 @@ const currentDate = document.querySelector("[data-current-date]");
 const newsStrip = document.querySelector("[data-news-strip]");
 const newsLabel = document.querySelector("[data-news-label]");
 const tickerTrack = document.querySelector(".ticker-track");
-const mastheadNote = document.querySelector("[data-masthead-note]");
-const dismissNote = document.querySelector("[data-dismiss-note]");
 const issueStrip = document.querySelector(".issue-strip");
 const archiveSearch = document.querySelector("[data-archive-search]");
 const archiveFilters = Array.from(document.querySelectorAll("[data-archive-filter]"));
@@ -276,16 +274,6 @@ if (archiveItems.length) {
   });
 
   updateArchive();
-}
-
-// The masthead note can be dismissed for the current page view only.
-if (mastheadNote && dismissNote) {
-  dismissNote.addEventListener("click", () => {
-    mastheadNote.classList.add("is-dismissing");
-    window.setTimeout(() => {
-      mastheadNote.hidden = true;
-    }, systemPrefersReducedMotion.matches ? 0 : 180);
-  });
 }
 
 // Keep the header stack visually stable; only scroll progress changes.

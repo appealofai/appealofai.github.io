@@ -54,7 +54,7 @@
       </div>
       <nav class="site-nav" id="site-menu" data-menu aria-label="Primary navigation">
         <a href="index.html" aria-current="page">Journal</a>
-        <a href="articles.html">Index</a>
+        <a href="articles.html">Notes</a>
       </nav>
     </header>
 
@@ -62,15 +62,20 @@
       <div class="no-js-banner">
         JavaScript is off. Reading works normally; theme switching and dynamic controls are disabled.
       </div>
+      <style id="no-js-news-style">
+        .newsbar { overflow-x: auto; scrollbar-width: none; }
+        .newsbar::-webkit-scrollbar { display: none; }
+        .ticker-track { animation: ticker 44s linear infinite; padding-right: 18px; }
+      </style>
     </noscript>
 
-    <div class="newsbar" data-news-strip data-breaking="false" data-last-updated="2026-06-10T12:00:00Z" aria-label="Notes ticker">
+    <div class="newsbar" data-news-strip data-breaking="false" data-last-updated="2026-06-11T16:00:00Z" aria-label="Notes ticker">
       <strong data-news-label>Notes</strong>
       <div class="ticker-track">
-        <a href="articles/ai-slop-social-text-fatigue.html">AI slop makes the public internet feel tired</a>
-        <a href="articles/messi-openai-football-campaign.html">Messi and OpenAI turn fan identity into an image prompt</a>
-        <a href="articles/anthropic-adolescence-of-technology.html">Anthropic frames AI as the adolescence of technology</a>
-        <a href="articles/grok-build-terminal-agent.html">Grok Build brings the coding-agent fight to the terminal</a>
+        <a href="articles/first-signal.html">Claude Fable 5 turns safeguards into the story</a>
+        <a href="articles/ai-upside-needs-public-deal.html">The AI upside needs a public deal</a>
+        <a href="articles/ai-slop-social-text-fatigue.html">AI slop is exhausting the public internet</a>
+        <a href="articles/ai-infrastructure-not-bubble.html">AI data centers turn the bubble debate into an energy debate</a>
         <a href="articles/apple-intelligence-naming-trap.html">Apple's AI problem is naming before delivery</a>
       </div>
     </div>
@@ -78,7 +83,7 @@
     <div class="issue-strip" aria-label="Current issue">
       <span data-current-date>Wednesday, June 10, 2026</span>
       <span>AI Culture Journal</span>
-      <span>Opinion only</span>
+      <span>Opinion only. No professional advice. Verify sources.</span>
     </div>
 
     <main id="main">
@@ -88,14 +93,17 @@
           <p class="hero-slogan issue-slogan">feel the appeal!</p>
           <h1 id="hero-title">Reading AI as culture, not just technology.</h1>
           <p>
-            A compact front page for Claude, Grok Build, Apple, AI slop,
-            orbital compute and the strange new craft of AI-assisted programming.
+            A compact front page for Claude, public upside, AI slop, energy,
+            Apple and the strange new craft of AI-assisted programming.
           </p>
-          <a class="hero-cta" href="articles/ai-slop-social-text-fatigue.html">Read the lead</a>
-          <div class="masthead-note" data-masthead-note>
-            <span>Personal opinion only. No professional advice. Read with sources and context.</span>
-            <button type="button" data-dismiss-note aria-label="Dismiss note">Close</button>
-          </div>
+          <a class="hero-lead-card" href="articles/first-signal.html">
+            <span class="hero-lead-visual" aria-hidden="true"></span>
+            <span class="hero-lead-copy">
+              <strong>Lead opinion</strong>
+              <span>Claude Fable 5 puts the trust wrapper around frontier models in the spotlight.</span>
+            </span>
+            <span class="hero-lead-action">Read lead</span>
+          </a>
         </div>
 
         <section class="top-stories" id="top-stories" aria-label="Featured stories">
@@ -103,43 +111,43 @@
             <p class="section-label">Featured</p>
           </div>
           <div class="story-track">
-            <a class="top-story-card" href="articles/ai-slop-social-text-fatigue.html">
-              <span>Lead</span>
-              <span class="card-visual" aria-hidden="true"></span>
-              <h2>AI slop is making the public internet feel tired.</h2>
-              <p>
-                The problem is not that people use AI. It is that empty synthetic
-                language keeps asking for attention it did not earn.
-              </p>
-              <span class="card-cta">Read lead</span>
-            </a>
-            <a class="top-story-card" href="articles/anthropic-adolescence-of-technology.html">
-              <span>Watch</span>
-              <span class="card-visual" aria-hidden="true"></span>
-              <h2>Anthropic's adolescence warning is really about growing up in public.</h2>
-              <p>
-                Dario Amodei's frame is useful because it admits the technology
-                is powerful, immature and already changing the room.
-              </p>
-              <span class="card-cta">Read watch</span>
-            </a>
-            <a class="top-story-card" href="articles/messi-openai-football-campaign.html">
-              <span>Sports</span>
-              <span class="card-visual" aria-hidden="true"></span>
-              <h2>Messi and OpenAI turn fan identity into an image prompt.</h2>
-              <p>
-                Sports identity is an obvious stage for generative images:
-                loyalty, color and self-image in one public frame.
-              </p>
-              <span class="card-cta">Read watch</span>
-            </a>
             <a class="top-story-card" href="articles/first-signal.html">
-              <span>Lead</span>
+              <span>Lead opinion</span>
               <span class="card-visual" aria-hidden="true"></span>
               <h2>Claude Fable 5 makes the model release feel like a governance story.</h2>
               <p>
-                The release is not only a capability story. It is a trust story:
-                access, refusals, safeguards and the public performance of control.
+                Capability still matters. The sharper signal is access,
+                refusals, safeguards and the public performance of control.
+              </p>
+              <span class="card-cta">Read lead</span>
+            </a>
+            <a class="top-story-card" href="articles/ai-upside-needs-public-deal.html">
+              <span>Opinion</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>The AI upside needs a public deal.</h2>
+              <p>
+                The appeal gets weaker if the gains feel privately captured
+                and publicly imposed. Distribution is now part of the story.
+              </p>
+              <span class="card-cta">Read opinion</span>
+            </a>
+            <a class="top-story-card" href="articles/ai-slop-social-text-fatigue.html">
+              <span>Culture</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>AI slop is exhausting the public internet.</h2>
+              <p>
+                People will use AI. Fine. The fatigue starts when synthetic
+                language arrives with no person, scene or point of view.
+              </p>
+              <span class="card-cta">Read note</span>
+            </a>
+            <a class="top-story-card" href="articles/ai-infrastructure-not-bubble.html">
+              <span>Infrastructure</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>The AI bubble question is really an infrastructure question.</h2>
+              <p>
+                Some valuations can be overheated. The deeper story is power,
+                cooling, chips, grids and useful intelligence per watt.
               </p>
               <span class="card-cta">Read note</span>
             </a>
@@ -163,15 +171,15 @@
               </p>
               <span class="card-cta">Read note</span>
             </a>
-            <a class="top-story-card" href="articles/ai-infrastructure-not-bubble.html">
-              <span>Infrastructure</span>
+            <a class="top-story-card" href="articles/messi-openai-football-campaign.html">
+              <span>Watch</span>
               <span class="card-visual" aria-hidden="true"></span>
-              <h2>The AI bubble question is really an infrastructure question.</h2>
+              <h2>Messi and OpenAI turn fan identity into an image prompt.</h2>
               <p>
-                Some valuations can be overheated. The deeper story is still
-                physical: power, cooling, chips, grids and useful work per watt.
+                Sports identity is an obvious stage for generative images:
+                loyalty, color and self-image in one public frame.
               </p>
-              <span class="card-cta">Read note</span>
+              <span class="card-cta">Read watch</span>
             </a>
           </div>
         </section>
