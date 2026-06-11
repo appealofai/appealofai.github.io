@@ -1,0 +1,9 @@
+The interesting part of a frontier model release is no longer just capability.
+
+It is the shape of the guardrails around it.
+
+Claude Fable 5 feels like that moment:
+power, price, safeguards, access, and the public performance of trust.
+
+The model is the headline.
+The trust wrapper is the story.

@@ -1,0 +1,10 @@
+Grok Build is less interesting as a single CLI and more interesting as a signal:
+
+coding agents are becoming platform surfaces.
+
+Chat is not enough.
+
+The model wants the repo, the terminal, the plan, the diff, the review.
+
+The appeal is leverage.
+The risk is still judgment.

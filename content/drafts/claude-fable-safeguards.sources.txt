@@ -1,0 +1,11 @@
+Sources for: Claude Fable 5 makes the model release feel like a governance story.
+
+- Anthropic News
+  https://www.anthropic.com/news
+
+- The Verge: Anthropic releases Claude Fable 5 and Mythos 5
+  https://www.theverge.com/news/946725/anthropic-releases-claude-fable-5-mythos
+
+Editorial caution:
+Confirm exact model naming, availability, pricing and safety language before
+publishing publicly. Keep claims narrow and source-visible.

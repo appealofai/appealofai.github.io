@@ -1,0 +1,22 @@
+Title: Claude Fable 5 makes the model release feel like a governance story.
+Type: Lead
+Date: 2026-06-09
+Status: Published draft
+
+Angle:
+The model is the headline. The trust wrapper is the story.
+
+Draft:
+A frontier model release used to be easy to read: bigger context, better
+benchmarks, cleaner demos, more pressure on everyone else. That story still
+exists. But it is no longer the whole thing.
+
+The Claude Fable 5 moment is interesting because the model is not only being
+sold as more capable. It is being framed through the systems around capability:
+safeguards, pricing, access, and the promise that power can be made civil enough
+to use.
+
+My instinct here is cautious, but not dismissive. The appeal of a better model
+is real. So is the discomfort of watching intelligence become something that
+arrives with a terms page, a throttle, a price sheet, and a promise that the
+dangerous parts have been properly domesticated.

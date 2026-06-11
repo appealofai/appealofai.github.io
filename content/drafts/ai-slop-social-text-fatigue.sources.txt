@@ -1,0 +1,9 @@
+Source checklist:
+- Define AI slop as a current public term.
+- Avoid claiming detection certainty.
+- Frame examples as typical patterns, not direct quotes from specific people.
+
+Sources:
+- https://en.wikipedia.org/wiki/AI_slop
+- https://www.fastcompany.com/91330702/what-is-ai-slop
+- https://www.theguardian.com/technology/article/2024/aug/20/techscape-ai-generated-art-slop-facebook-shrimp-jesus

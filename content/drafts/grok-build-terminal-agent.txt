@@ -1,0 +1,12 @@
+Title: Grok Build makes the coding-agent race feel official.
+
+Grok Build matters because it makes the coding-agent race feel less like a
+feature and more like a platform surface.
+
+The important shift is not simply "AI writes code." It is that the AI wants to
+sit where software actually changes: repo, terminal, plan, diff, review.
+
+The conventional category is AI-assisted programming or coding agents. Grok
+Build joins the wider movement from answer boxes into developer workflows.
+
+The appeal is leverage. The risk is still judgment.

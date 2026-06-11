@@ -1,0 +1,15 @@
+Sources for: The AI bubble question is really an infrastructure question.
+
+- IEA: Energy and AI
+  https://www.iea.org/reports/energy-and-ai
+
+- IEA: Electricity 2026
+  https://www.iea.org/reports/electricity-2026
+
+- Data Center Dynamics
+  https://www.datacenterdynamics.com/
+
+Claim note:
+Avoid saying "there is no bubble" as a market fact. The stronger personal
+opinion is that the simple bubble framing is too small because AI demand is
+already visible in physical infrastructure.

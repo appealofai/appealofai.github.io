@@ -1,0 +1,9 @@
+Title: The AI bubble question is really an infrastructure question.
+
+I do not buy the simple "AI is a bubble" take. Some valuations can be
+overheated, and some demos can be theater. But the deeper story is physical:
+power, cooling, chips, land, grids and data centers.
+
+The sharper question is whether the infrastructure boom can turn all that demand
+into enough useful intelligence. The future is not just bigger models. It is
+useful intelligence per watt.

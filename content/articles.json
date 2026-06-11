@@ -1,75 +1,172 @@
 {
-  "updated": "2026-06-08T12:00:00Z",
+  "updated": "2026-06-10T12:00:00Z",
   "items": [
     {
-      "id": "ai-culture-public-imagination",
+      "id": "messi-openai-football-campaign",
+      "status": "published",
+      "type": "watch",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T21:36:00Z",
+      "title": "Messi and OpenAI turn fan identity into an image prompt.",
+      "tickerTitle": "Messi and OpenAI turn fan identity into an image prompt",
+      "summary": "A watch note on the reported Messi x OpenAI campaign and why sports identity is an obvious stage for generative images.",
+      "url": "articles/messi-openai-football-campaign.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["openai", "messi", "images", "culture", "sports"],
+      "sources": [
+        "https://timesofindia.indiatimes.com/technology/tech-news/chatgpt-gives-lionel-messi-argentina-makeover-how-fans-can-get-the-same-look/articleshow/131639463.cms"
+      ],
+      "xPost": "If Messi x OpenAI is the first global football season of the AI era, the interesting part is not the haircut. It is fan identity becoming editable media: colors, loyalty, image prompts, and culture as a shared generative surface."
+    },
+    {
+      "id": "ai-slop-social-text-fatigue",
       "status": "published",
       "type": "lead",
-      "date": "2026-06-08",
-      "updated": "2026-06-08T12:00:00Z",
-      "title": "AI culture is becoming a public imagination problem.",
-      "tickerTitle": "AI culture is now a public argument",
-      "summary": "A weekly field note connecting model launches, regulation, creative tools and public language around machine intelligence.",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T18:20:00Z",
+      "title": "AI slop is making the public internet feel tired.",
+      "tickerTitle": "AI slop makes the public internet feel tired",
+      "summary": "A personal note on synthetic comments, generic article filler and why people can feel when language has no witness behind it.",
+      "url": "articles/ai-slop-social-text-fatigue.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["culture", "social-media", "ai-slop", "writing"],
+      "sources": [
+        "https://en.wikipedia.org/wiki/AI_slop",
+        "https://www.fastcompany.com/91330702/what-is-ai-slop",
+        "https://www.theguardian.com/technology/article/2024/aug/20/techscape-ai-generated-art-slop-facebook-shrimp-jesus"
+      ],
+      "xPost": "AI slop is not annoying because people use tools. It is annoying because the output has no witness behind it. The comment sounds like a comment. The article sounds like an article. But nothing human has actually happened there."
+    },
+    {
+      "id": "anthropic-adolescence-of-technology",
+      "status": "published",
+      "type": "watch",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T18:10:00Z",
+      "title": "Anthropic's adolescence warning is really about growing up in public.",
+      "tickerTitle": "Anthropic frames AI as the adolescence of technology",
+      "summary": "Dario Amodei's warning works because it treats AI as powerful, immature and already socially consequential.",
+      "url": "articles/anthropic-adolescence-of-technology.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["anthropic", "safety", "culture", "governance"],
+      "sources": [
+        "https://darioamodei.com/the-adolescence-of-technology",
+        "https://www.anthropic.com/news"
+      ],
+      "xPost": "The useful part of Anthropic's adolescence frame is not the drama. It is the admission that AI is powerful, immature and already changing the room. That is exactly the phase where confidence is easy and judgment matters."
+    },
+    {
+      "id": "claude-fable-safeguards",
+      "status": "published",
+      "type": "lead",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T12:00:00Z",
+      "title": "Claude Fable 5 makes the model release feel like a governance story.",
+      "tickerTitle": "Claude Fable 5 turns safeguards into the story",
+      "summary": "A field note on why the newest Claude coverage is not only about capability, but about what kind of trust a model tries to earn.",
       "url": "articles/first-signal.html",
       "image": "assets/img/social-card.png",
-      "tags": ["culture", "identity", "policy"],
-      "xPost": "AI culture is no longer just a technology story. It is becoming a public imagination problem: tools, rights, images, identity and power in one strange new surface."
+      "tags": ["claude", "models", "safety", "trust"],
+      "sources": [
+        "https://www.anthropic.com/news",
+        "https://www.theverge.com/news/946725/anthropic-releases-claude-fable-5-mythos"
+      ],
+      "xPost": "The interesting part of a frontier model release is no longer just capability. It is the shape of the guardrails around it. Claude Fable 5 reads like that moment: power, price, safeguards, and the public performance of trust."
     },
     {
-      "id": "image-models-identity-infrastructure",
-      "status": "draft",
-      "type": "brief",
-      "date": "2026-06-08",
-      "updated": "2026-06-08T10:30:00Z",
-      "title": "Image models are becoming identity infrastructure.",
-      "tickerTitle": "Image models become identity infrastructure",
-      "summary": "A short visual desk note about style, memory, profile images and generated presence.",
-      "url": "articles/article-template.html",
+      "id": "grok-build-terminal-agent",
+      "status": "published",
+      "type": "article",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T12:30:00Z",
+      "title": "Grok Build makes the coding-agent race feel official.",
+      "tickerTitle": "Grok Build brings the coding-agent fight to the terminal",
+      "summary": "xAI's Grok Build Beta turns Grok into a terminal coding agent, which makes the developer workflow itself part of the AI platform war.",
+      "url": "articles/grok-build-terminal-agent.html",
       "image": "assets/img/social-card.png",
-      "tags": ["images", "identity", "visuals"],
-      "xPost": "Image models are becoming identity infrastructure: not just pictures, but profile surfaces, memory machines and style systems."
+      "tags": ["grok", "coding-agents", "developer-tools", "xai"],
+      "sources": [
+        "https://x.ai/cli",
+        "https://docs.x.ai/"
+      ],
+      "xPost": "Grok Build is less interesting as a single CLI and more interesting as a signal: coding agents are becoming platform surfaces. Chat is not enough. The model wants the repo, the terminal, the plan, the diff, the review."
     },
     {
-      "id": "agents-daily-workflows",
-      "status": "draft",
-      "type": "brief",
-      "date": "2026-06-07",
-      "updated": "2026-06-07T18:00:00Z",
-      "title": "Agents are moving from impressive demos into ordinary routines.",
-      "tickerTitle": "Agents move from demos into daily workflows",
-      "summary": "A practical note about when delegation helps, when it fails and why interfaces matter.",
-      "url": "articles/article-template.html",
+      "id": "apple-intelligence-naming-trap",
+      "status": "published",
+      "type": "article",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T11:30:00Z",
+      "title": "Apple Intelligence still has a naming problem.",
+      "tickerTitle": "Apple's AI problem is naming before delivery",
+      "summary": "Apple's AI brand is elegant, but the delivery gap makes every Siri miss feel bigger than a normal product delay.",
+      "url": "articles/apple-intelligence-naming-trap.html",
       "image": "assets/img/social-card.png",
-      "tags": ["agents", "workflows", "interfaces"],
-      "xPost": "Agents become interesting when they leave the demo and enter the routine. The question is not magic. It is delegation, friction and trust."
+      "tags": ["apple", "siri", "wwdc", "product"],
+      "sources": [
+        "https://www.apple.com/newsroom/",
+        "https://developer.apple.com/wwdc/",
+        "https://www.axios.com/2026/06/09/apple-siri-ai-agents-wwdc",
+        "https://www.businessinsider.com/what-smart-people-are-saying-about-apple-ai-announcements-wwdc-2026-6"
+      ],
+      "xPost": "Apple may have named the thing too loudly. Apple Intelligence sounds inevitable. But if Siri still feels ordinary, every miss becomes a brand problem, not just a feature gap."
     },
     {
-      "id": "ai-search-source-links",
-      "status": "draft",
-      "type": "brief",
-      "date": "2026-06-07",
-      "updated": "2026-06-07T14:00:00Z",
-      "title": "AI search puts source links back in the spotlight.",
-      "tickerTitle": "AI search puts source links back in the spotlight",
-      "summary": "A source-first brief about attribution, summaries and why links still matter.",
-      "url": "articles/article-template.html",
+      "id": "spacex-orbital-ai-compute",
+      "status": "published",
+      "type": "article",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T11:00:00Z",
+      "title": "AI data centers in orbit sound absurd until the compute hunger looks ordinary.",
+      "tickerTitle": "SpaceX wants AI data centers in orbit",
+      "summary": "Orbital compute is easy to mock and hard to dismiss, because the AI infrastructure appetite keeps getting less earthly.",
+      "url": "articles/spacex-orbital-ai-compute.html",
       "image": "assets/img/social-card.png",
-      "tags": ["search", "sources", "attribution"],
-      "xPost": "AI search makes source trails feel newly important. Summaries are useful, but the link is still where context, responsibility and trust begin."
+      "tags": ["spacex", "infrastructure", "compute", "space"],
+      "sources": [
+        "https://www.spacex.com/",
+        "https://www.starlink.com/",
+        "https://www.businessinsider.com/elon-musk-ai-data-centers-spacex-will-send-into-space-2026-6",
+        "https://arxiv.org/abs/2604.27197"
+      ],
+      "xPost": "AI data centers in space sound ridiculous in the exact way infrastructure shifts often sound ridiculous before they become spreadsheets. The appeal is not the spectacle. It is the visible hunger for compute."
     },
     {
-      "id": "creator-style-protection",
-      "status": "draft",
-      "type": "brief",
-      "date": "2026-06-06",
-      "updated": "2026-06-06T16:00:00Z",
-      "title": "Creator style protection enters the policy debate.",
-      "tickerTitle": "Creator style protection enters the policy debate",
-      "summary": "A rights note about likeness, style, opt-outs and the culture around protection.",
-      "url": "articles/article-template.html",
+      "id": "ai-infrastructure-not-bubble",
+      "status": "published",
+      "type": "article",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T13:00:00Z",
+      "title": "The AI bubble question is really an infrastructure question.",
+      "tickerTitle": "AI data centers turn the bubble debate into an energy debate",
+      "summary": "The simple bubble take misses the physical story: power, cooling, chips, grids, data centers and useful intelligence per watt.",
+      "url": "articles/ai-infrastructure-not-bubble.html",
       "image": "assets/img/social-card.png",
-      "tags": ["rights", "style", "creators"],
-      "xPost": "The style question is becoming a policy question: what can be protected, what can be referenced and what creators need from AI systems."
+      "tags": ["infrastructure", "energy", "data-centers", "markets"],
+      "sources": [
+        "https://www.iea.org/reports/energy-and-ai",
+        "https://www.iea.org/reports/electricity-2026",
+        "https://www.datacenterdynamics.com/"
+      ],
+      "xPost": "I do not buy the simple AI bubble take. Some valuations can be overheated. Some demos can be theater. But the deeper story is physical: power, cooling, chips, land, grids, data centers. The real question is useful intelligence per watt."
+    },
+    {
+      "id": "vibe-coding-expertise-leverage",
+      "status": "published",
+      "type": "article",
+      "date": "2026-06-10",
+      "updated": "2026-06-10T10:00:00Z",
+      "title": "Vibe coding is leverage, not a replacement for judgment.",
+      "tickerTitle": "Vibe coding works best when the human still knows the craft",
+      "summary": "AI-assisted programming is strongest in expert hands: faster exploration, faster drafts, but still dependent on taste, structure and review.",
+      "url": "articles/vibe-coding-expertise-leverage.html",
+      "image": "assets/img/social-card.png",
+      "tags": ["vibe-coding", "software", "craft", "tools"],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vibe_coding",
+        "https://github.blog/ai-and-ml/generative-ai/vibe-coding/"
+      ],
+      "xPost": "Vibe coding without engineering judgment is mostly confidence cosplay. Vibe coding with expertise is leverage: faster drafts, faster exploration, and still enough taste to catch the structural mistakes."
     }
   ]
 }

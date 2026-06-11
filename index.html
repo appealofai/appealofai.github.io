@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#001f35" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f2ead1" media="(prefers-color-scheme: light)">
     <meta name="robots" content="noindex, nofollow">
     <meta
       name="description"
@@ -30,7 +33,7 @@
     <meta name="twitter:image" content="https://appealofai.sol.site/assets/img/social-card.png">
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
+  <body class="home-page">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header" data-header aria-label="Site header">
       <a class="brand" href="index.html" aria-label="Appeal of AI home">
@@ -48,239 +51,139 @@
             </svg>
           </span>
         </button>
-        <button
-          class="icon-button menu-button"
-          type="button"
-          data-menu-toggle
-          aria-label="Open menu"
-          aria-controls="site-menu"
-          aria-expanded="false"
-        >
-          <span aria-hidden="true"></span>
-        </button>
       </div>
       <nav class="site-nav" id="site-menu" data-menu aria-label="Primary navigation">
         <a href="index.html" aria-current="page">Journal</a>
-        <a href="articles.html">Briefs</a>
-        <a href="about.html">About</a>
+        <a href="articles.html">Index</a>
       </nav>
     </header>
 
     <noscript>
       <div class="no-js-banner">
-        JavaScript is off. Reading works normally; theme switching and active section highlighting are disabled.
+        JavaScript is off. Reading works normally; theme switching and dynamic controls are disabled.
       </div>
     </noscript>
 
-    <div class="newsbar" data-news-strip data-breaking="false" data-last-updated="2026-06-07T12:00:00Z" aria-label="Notes ticker">
+    <div class="newsbar" data-news-strip data-breaking="false" data-last-updated="2026-06-10T12:00:00Z" aria-label="Notes ticker">
       <strong data-news-label>Notes</strong>
       <div class="ticker-track">
-        <span>AI search puts source links back in the spotlight</span>
-        <span>Creator style protection enters the policy debate</span>
-        <span>Agents move from demos into daily workflows</span>
-        <span>Image models become identity infrastructure</span>
-        <span>AI search puts source links back in the spotlight</span>
-        <span>Creator style protection enters the policy debate</span>
-        <span>Agents move from demos into daily workflows</span>
-        <span>Image models become identity infrastructure</span>
+        <a href="articles/ai-slop-social-text-fatigue.html">AI slop makes the public internet feel tired</a>
+        <a href="articles/messi-openai-football-campaign.html">Messi and OpenAI turn fan identity into an image prompt</a>
+        <a href="articles/anthropic-adolescence-of-technology.html">Anthropic frames AI as the adolescence of technology</a>
+        <a href="articles/grok-build-terminal-agent.html">Grok Build brings the coding-agent fight to the terminal</a>
+        <a href="articles/apple-intelligence-naming-trap.html">Apple's AI problem is naming before delivery</a>
       </div>
     </div>
 
     <div class="issue-strip" aria-label="Current issue">
-      <span data-current-date>Sunday, June 7, 2026</span>
+      <span data-current-date>Wednesday, June 10, 2026</span>
       <span>AI Culture Journal</span>
       <span>Opinion only</span>
     </div>
 
-    <nav class="issue-rail" data-issue-rail aria-label="Edition index">
-      <a href="#front">Cover</a>
-      <a href="#top-stories">Featured</a>
-      <a href="#latest">Lead</a>
-      <a href="#briefs">Dispatches</a>
-      <a href="#about">About</a>
-    </nav>
-
     <main id="main">
       <section class="hero newspaper-hero" id="front" aria-labelledby="hero-title">
         <div class="issue-masthead">
+          <img class="hero-brand" src="assets/img/logo-with-name-horizontal.svg" alt="appealofai">
           <p class="hero-slogan issue-slogan">feel the appeal!</p>
           <h1 id="hero-title">Reading AI as culture, not just technology.</h1>
           <p>
-            A compact weekly front page for the releases, rights questions,
-            image politics and agent workflows that deserve more than a timeline reaction.
+            A compact front page for Claude, Grok Build, Apple, AI slop,
+            orbital compute and the strange new craft of AI-assisted programming.
           </p>
+          <a class="hero-cta" href="articles/ai-slop-social-text-fatigue.html">Read the lead</a>
           <div class="masthead-note" data-masthead-note>
             <span>Personal opinion only. No professional advice. Read with sources and context.</span>
             <button type="button" data-dismiss-note aria-label="Dismiss note">Close</button>
           </div>
         </div>
-        <section class="top-stories" id="top-stories" data-top-stories aria-label="Featured stories">
+
+        <section class="top-stories" id="top-stories" aria-label="Featured stories">
           <div class="top-stories-head">
             <p class="section-label">Featured</p>
           </div>
           <div class="story-track">
-            <article class="top-story-card is-active" data-story-slide>
+            <a class="top-story-card" href="articles/ai-slop-social-text-fatigue.html">
               <span>Lead</span>
-              <h2>AI culture is becoming a public imagination problem.</h2>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>AI slop is making the public internet feel tired.</h2>
               <p>
-                Start here with a weekly field note that connects model launches,
-                regulation, creative tools and the way people talk about machine intelligence.
+                The problem is not that people use AI. It is that empty synthetic
+                language keeps asking for attention it did not earn.
               </p>
-            </article>
-            <article class="top-story-card" data-story-slide>
-              <span>Visual Desk</span>
-              <h2>The image model is now part camera, part studio, part memory.</h2>
+              <span class="card-cta">Read lead</span>
+            </a>
+            <a class="top-story-card" href="articles/anthropic-adolescence-of-technology.html">
+              <span>Watch</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>Anthropic's adolescence warning is really about growing up in public.</h2>
               <p>
-                Use this slot for image culture: style rights, synthetic identity,
-                attribution, taste and the craft behind generated visual work.
+                Dario Amodei's frame is useful because it admits the technology
+                is powerful, immature and already changing the room.
               </p>
-            </article>
-            <article class="top-story-card" data-story-slide>
-              <span>Briefing</span>
-              <h2>Agents are moving from impressive demos into ordinary routines.</h2>
+              <span class="card-cta">Read watch</span>
+            </a>
+            <a class="top-story-card" href="articles/messi-openai-football-campaign.html">
+              <span>Sports</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>Messi and OpenAI turn fan identity into an image prompt.</h2>
               <p>
-                Track agents as interfaces: where they are useful, where they are
-                brittle and what changes when work becomes partially delegated.
+                Sports identity is an obvious stage for generative images:
+                loyalty, color and self-image in one public frame.
               </p>
-            </article>
-          </div>
-          <div class="story-footer">
-            <button class="story-nav-button" type="button" data-story-prev aria-label="Previous featured note">
-              <span aria-hidden="true">&lsaquo;</span>
-              <span>Previous</span>
-            </button>
-            <span class="story-counter" data-story-counter aria-live="polite">1 / 3</span>
-            <button class="story-nav-button" type="button" data-story-next aria-label="Next featured note">
-              <span>Next</span>
-              <span aria-hidden="true">&rsaquo;</span>
-            </button>
+              <span class="card-cta">Read watch</span>
+            </a>
+            <a class="top-story-card" href="articles/first-signal.html">
+              <span>Lead</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>Claude Fable 5 makes the model release feel like a governance story.</h2>
+              <p>
+                The release is not only a capability story. It is a trust story:
+                access, refusals, safeguards and the public performance of control.
+              </p>
+              <span class="card-cta">Read note</span>
+            </a>
+            <a class="top-story-card" href="articles/apple-intelligence-naming-trap.html">
+              <span>Apple</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>Apple Intelligence still has a naming problem.</h2>
+              <p>
+                The brand is elegant. The risk is expectation debt: when Siri
+                still feels ordinary, the name makes every miss louder.
+              </p>
+              <span class="card-cta">Read note</span>
+            </a>
+            <a class="top-story-card" href="articles/grok-build-terminal-agent.html">
+              <span>Developer Tools</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>Grok Build brings the coding-agent fight to the terminal.</h2>
+              <p>
+                xAI turns Grok into a terminal agent, which makes developer
+                workflow the next visible AI platform surface.
+              </p>
+              <span class="card-cta">Read note</span>
+            </a>
+            <a class="top-story-card" href="articles/ai-infrastructure-not-bubble.html">
+              <span>Infrastructure</span>
+              <span class="card-visual" aria-hidden="true"></span>
+              <h2>The AI bubble question is really an infrastructure question.</h2>
+              <p>
+                Some valuations can be overheated. The deeper story is still
+                physical: power, cooling, chips, grids and useful work per watt.
+              </p>
+              <span class="card-cta">Read note</span>
+            </a>
           </div>
         </section>
-        <div class="frontpage-grid">
-          <article class="issue-card">
-            <span>Current Focus</span>
-            <h3>Culture, identity, images, agents.</h3>
-            <p>
-              This issue frames AI as public culture: a mix of releases,
-              rights questions, visual identity, source trails and daily
-              machine-mediated work.
-            </p>
-          </article>
-          <article class="issue-card">
-            <span>Publishing Shape</span>
-            <h3>One lead, several briefs, visible sources.</h3>
-            <p>
-              Start with a strong editorial lead, add short dispatches for
-              fast-moving signals, and keep source context close to the claim.
-            </p>
-          </article>
-          <article class="issue-card">
-            <span>For 𝕏</span>
-            <h3>Short public notes, site-first archive.</h3>
-            <p>
-              Each site piece should have a compact companion post for 𝕏:
-              readable alone, but pointing back to the full note and sources.
-            </p>
-          </article>
-        </div>
       </section>
 
-      <section class="section front-page" id="latest">
-        <div class="section-heading">
-          <p class="section-label">Lead</p>
-          <h2>The main field note goes here.</h2>
-          <p>
-            One clear weekly argument, written as personal analysis and backed
-            by source context.
-          </p>
-        </div>
-        <div class="front-grid">
-          <article class="lead-story">
-            <span>Lead Brief</span>
-            <h3>AI search, creator rights and agents are all becoming authorship questions.</h3>
-            <p>
-              A strong first article would connect AI search attribution, style
-              protection for creators and agentic workflows into one readable
-              question: who gets credit when systems mediate the work?
-            </p>
-            <footer class="meta-row" aria-label="Article metadata">
-              <span>Brief</span>
-              <span>4 min</span>
-              <span>Sources linked</span>
-            </footer>
-          </article>
-          <article class="news-card">
-            <span>Watchlist</span>
-            <h3>Three notes to watch this week.</h3>
-            <p>AI search source links, style-protection law, and the shift from chatbot demos to agent workflows.</p>
-          </article>
-          <article class="news-card">
-            <span>Visual Desk</span>
-            <h3>A generated image is also a design decision.</h3>
-            <p>Start with visual notes on taste, defaults, artifacts and when an image becomes an identity object.</p>
-          </article>
-          <article class="news-card">
-            <span>Archive</span>
-            <h3>What changed after the launch cycle moved on?</h3>
-            <p>A recurring format for revisiting claims, demos and predictions after enough time has passed.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section fields" id="briefs" aria-label="Editorial formats">
-        <div class="section-heading">
-          <p class="section-label">Dispatches</p>
-          <h2>Short dispatches before they become essays.</h2>
-          <p>
-            A compact set of repeatable formats for the signals that do not
-            need a long essay yet.
-          </p>
-        </div>
-        <article>
-          <span>01</span>
-          <h3>Briefs</h3>
-          <p>Fast notes on current developments. Ideal for 𝕏 hooks, short threads and weekly updates.</p>
-        </article>
-        <article>
-          <span>02</span>
-          <h3>Source Notes</h3>
-          <p>Brief trails showing what a claim is based on, what is uncertain and what needs follow-up.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <h3>Visual Studies</h3>
-          <p>Visual experiments, prompt notes, identity studies and artifacts from AI-native production.</p>
-        </article>
-      </section>
-
-      <section class="section signal" id="about">
-        <div class="section-heading">
-          <p class="section-label">About</p>
-          <h2>What this project is for.</h2>
-          <p>
-            A personal, independent record of AI culture: less daily hype,
-            more context, memory and taste.
-          </p>
-        </div>
-        <div class="signal-panel">
-          <div>
-            <h2>A classic editorial object for machine-age culture.</h2>
-            <p>
-              Appeal of AI treats the website as the archive and 𝕏 as the
-              public stage. The look can borrow from a paper without
-              pretending to be daily news: opinionated, sourced and visually
-              memorable.
-            </p>
-          </div>
-          <span class="text-note">Personal opinion. No professional advice. Contact via 𝕏 @appealofai.</span>
-        </div>
-      </section>
     </main>
 
     <footer class="site-footer">
       <span>&copy; 2026 appealofai &middot; Personal opinion only &middot; No professional advice &middot; Verify sources and context</span>
       <nav aria-label="Legal navigation">
-        <a class="x-link" href="https://x.com/appealofai"><span aria-hidden="true">𝕏</span><span>@appealofai</span></a>
+        <a class="x-link" href="https://x.com/appealofai"><span>@appealofai on &#120143;</span></a>
+        <a href="about.html">About</a>
         <a href="legal.html">Legal</a>
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>

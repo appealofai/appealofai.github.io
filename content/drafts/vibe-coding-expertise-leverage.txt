@@ -1,0 +1,15 @@
+Title: Vibe coding is leverage, not a replacement for judgment.
+
+Vibe coding is a useful cultural phrase. The more precise term is AI-assisted
+programming.
+
+Without expertise, the workflow is risky. A model can produce code that runs,
+but a beginner may not see the structural mistake, missing edge case, weak
+security boundary or architecture that will become painful later.
+
+With expertise, the same workflow becomes leverage. It speeds up drafts,
+branches, refactors and exploration. The human still needs taste, review and
+technical judgment.
+
+The appeal is not that AI replaces craft. It is that craft suddenly has a much
+faster instrument.

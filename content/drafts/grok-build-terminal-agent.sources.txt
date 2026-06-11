@@ -1,0 +1,12 @@
+Sources for: Grok Build makes the coding-agent race feel official.
+
+- xAI: Grok Build Beta
+  https://x.ai/cli
+
+- xAI Docs
+  https://docs.x.ai/
+
+Claim note:
+Use "coding agent" and "AI-assisted programming" as the conventional terms.
+Avoid claiming benchmark superiority unless xAI or independent sources provide
+direct evidence.

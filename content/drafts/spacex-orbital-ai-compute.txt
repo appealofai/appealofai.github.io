@@ -1,0 +1,20 @@
+Title: AI data centers in orbit sound absurd until the compute hunger looks ordinary.
+Type: Article draft
+Date: 2026-06-09
+Status: Draft
+
+Angle:
+Orbital AI infrastructure sounds like science fiction until the compute problem
+starts looking like the least fictional part.
+
+Draft:
+AI data centers in space sound ridiculous in the exact way many infrastructure
+shifts sound ridiculous right before they become spreadsheets.
+
+The image is almost too clean: solar power, orbital cooling problems, satellites,
+chips, launch cadence, a whole machine economy floating above the weather. It
+feels absurd. It also feels like a very honest description of where AI is going:
+more compute, more energy, more geography.
+
+The appeal is not the spectacle. It is the visibility of the hunger underneath.
+AI keeps pretending to be software. Then the infrastructure bill arrives.

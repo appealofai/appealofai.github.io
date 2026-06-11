@@ -1,0 +1,12 @@
+Sources for: Vibe coding is leverage, not a replacement for judgment.
+
+- Vibe coding term overview
+  https://en.wikipedia.org/wiki/Vibe_coding
+
+- GitHub Blog: vibe coding context
+  https://github.blog/ai-and-ml/generative-ai/vibe-coding/
+
+Claim note:
+Use "vibe coding" when discussing the cultural phrase. Use "AI-assisted
+programming" or "AI-assisted software development" when making the broader,
+more precise point.

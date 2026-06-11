@@ -1,49 +1,29 @@
-APPEALOFAI CONTENT - SIMPLE VERSION
+APPEALOFAI CONTENT
 
-What the website reads automatically:
+Short version:
 
-- content/articles.json
+1. Write and verify the article.
+2. Create the public HTML page in articles/.
+3. Add the public metadata to content/articles.json.
+4. Put the X companion copy in content/drafts/article-id.x.txt if useful.
 
-The notes ticker uses this file. Each item can provide:
+Automatic behavior:
 
-- title
-- tickerTitle
-- summary
-- date
-- updated
-- url
-- image
-- tags
-- xPost
+- The Notes ticker reads content/articles.json.
+- Only published items appear in the ticker.
+- Draft text files are not published automatically.
 
-What the website does NOT read automatically yet:
+Why this is the current best setup:
 
-- content/drafts/*.txt
-- content/drafts/*.sources.txt
-- content/drafts/*.x.txt
+- It is static, simple and safe.
+- Every public page can be reviewed before it goes live.
+- The same article metadata can power the front page, archive and ticker.
+- Automation can be added later if publishing becomes repetitive.
 
-Those files are your writing workspace.
+Current menu:
 
-Recommended workflow:
+- Journal
+- Articles
+- About
 
-1. Write the long draft in:
-   content/drafts/example-title.txt
-
-2. Put source links and claim notes in:
-   content/drafts/example-title.sources.txt
-
-3. Put the X companion post in:
-   content/drafts/example-title.x.txt
-
-4. Add the short public metadata to:
-   content/articles.json
-
-5. When the article is ready, create or update the matching HTML article page.
-
-Current best strategy:
-
-- Keep the website static.
-- Keep the navigation small: Journal, Briefs, About.
-- Use articles.json for public lists and ticker text.
-- Use drafts/ as your private editorial workspace.
-- Add automation later only when publishing becomes repetitive.
+Do not add menu items until there is enough real content for them.

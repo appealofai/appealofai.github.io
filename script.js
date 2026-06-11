@@ -3,20 +3,20 @@ const root = document.documentElement;
 const menu = document.querySelector("[data-menu]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const themeToggle = document.querySelector("[data-theme-toggle]");
-const issueLinks = Array.from(document.querySelectorAll('.issue-rail a[href^="#"]'));
+const issueLinks = Array.from(document.querySelectorAll('[data-section-link][href^="#"]'));
 const currentDate = document.querySelector("[data-current-date]");
 const newsStrip = document.querySelector("[data-news-strip]");
 const newsLabel = document.querySelector("[data-news-label]");
 const tickerTrack = document.querySelector(".ticker-track");
 const mastheadNote = document.querySelector("[data-masthead-note]");
 const dismissNote = document.querySelector("[data-dismiss-note]");
-const topStories = document.querySelector("[data-top-stories]");
 const issueStrip = document.querySelector(".issue-strip");
-const issueRail = document.querySelector("[data-issue-rail]");
+const archiveSearch = document.querySelector("[data-archive-search]");
+const archiveFilters = Array.from(document.querySelectorAll("[data-archive-filter]"));
+const archiveItems = Array.from(document.querySelectorAll("[data-archive-item]"));
+const archiveEmpty = document.querySelector("[data-archive-empty]");
 let issueSections = [];
 let activeIssueIndex = 0;
-let headerLogoIsHidden = false;
-let issueStripIsHidden = false;
 
 const systemPrefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
 const systemPrefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -50,20 +50,18 @@ document.querySelectorAll("[data-fallback-remove]").forEach((image) => {
 const getHeaderOffset = () => {
   const height = header?.offsetHeight || 72;
   const newsbarHeight = newsStrip?.offsetHeight || 0;
-  const issueStripHeight = issueStrip?.classList.contains("is-hidden") ? 0 : issueStrip?.scrollHeight || 0;
-  const issueRailHeight = issueRail?.offsetHeight || 0;
+  const issueStripHeight = issueStrip?.scrollHeight || 0;
   root.style.setProperty("--header-height", `${height}px`);
   root.style.setProperty("--newsbar-height", `${newsbarHeight}px`);
   root.style.setProperty("--issue-strip-height", `${issueStripHeight}px`);
-  root.style.setProperty("--issue-rail-height", `${issueRailHeight}px`);
-  return height + newsbarHeight + issueStripHeight + issueRailHeight + 18;
+  return height + newsbarHeight + issueStripHeight + 18;
 };
 
 if ("ResizeObserver" in window) {
   const stickyMetricObserver = new ResizeObserver(() => {
     window.requestAnimationFrame(getHeaderOffset);
   });
-  [header, newsStrip, issueRail].filter(Boolean).forEach((element) => {
+  [header, newsStrip, issueStrip].filter(Boolean).forEach((element) => {
     stickyMetricObserver.observe(element);
   });
 }
@@ -152,13 +150,22 @@ const getContentFeedUrl = () => {
   return new URL("content/articles.json", scriptUrl);
 };
 
+const getSiteRelativeUrl = (href) => {
+  return new URL(href, new URL("../", getContentFeedUrl())).href;
+};
+
+const getTickerTitle = (item) => {
+  const title = item.tickerTitle || item.title || "";
+  return title.length > 62 ? `${title.slice(0, 59).trim()}...` : title;
+};
+
 const renderTickerFromArticles = (items = []) => {
   if (!newsStrip || !tickerTrack || !items.length) return;
 
   const now = Date.now();
   const maxAgeInDays = 21;
   const activeItems = items
-    .filter((item) => item.status === "published" || item.status === "draft")
+    .filter((item) => item.status === "published")
     .filter((item) => item.tickerTitle !== false)
     .map((item) => ({
       ...item,
@@ -177,10 +184,12 @@ const renderTickerFromArticles = (items = []) => {
 
   const repeatedItems = [...tickerItems, ...tickerItems];
   tickerTrack.replaceChildren(...repeatedItems.map((item) => {
-    const span = document.createElement("span");
-    span.textContent = item.tickerTitle || item.title;
-    return span;
+    const element = item.url ? document.createElement("a") : document.createElement("span");
+    element.textContent = getTickerTitle(item);
+    if (item.url) element.href = getSiteRelativeUrl(item.url);
+    return element;
   }));
+  setupTickerMotion();
 };
 
 const loadArticleFeed = async () => {
@@ -198,44 +207,91 @@ const loadArticleFeed = async () => {
 
 loadArticleFeed();
 
+const setupTickerMotion = () => {
+  if (!tickerTrack || systemPrefersReducedMotion.matches) return;
+  if (tickerTrack.dataset.motionReady === "true") return;
+  tickerTrack.dataset.motionReady = "true";
+  let frame = 0;
+  let currentRate = 1;
+  let targetRate = 1;
+
+  const step = () => {
+    currentRate += (targetRate - currentRate) * 0.12;
+    tickerTrack.getAnimations().forEach((animation) => {
+      animation.playbackRate = currentRate;
+    });
+
+    if (Math.abs(targetRate - currentRate) > 0.01) {
+      frame = window.requestAnimationFrame(step);
+    } else {
+      currentRate = targetRate;
+      frame = 0;
+    }
+  };
+
+  const setRate = (rate) => {
+    targetRate = rate;
+    if (!frame) frame = window.requestAnimationFrame(step);
+  };
+
+  tickerTrack.addEventListener("pointerenter", () => setRate(0.42));
+  tickerTrack.addEventListener("pointerleave", () => setRate(1));
+  tickerTrack.addEventListener("focusin", () => setRate(0.42));
+  tickerTrack.addEventListener("focusout", () => setRate(1));
+};
+
+setupTickerMotion();
+
+// Simple archive search and topic filters.
+if (archiveItems.length) {
+  let activeFilter = "all";
+
+  const updateArchive = () => {
+    const query = archiveSearch?.value.trim().toLowerCase() || "";
+    let visibleCount = 0;
+
+    archiveItems.forEach((item) => {
+      const text = item.textContent.toLowerCase();
+      const topics = (item.dataset.topics || "").split(" ");
+      const matchesFilter = activeFilter === "all" || topics.includes(activeFilter);
+      const matchesSearch = !query || text.includes(query);
+      const isVisible = matchesFilter && matchesSearch;
+
+      item.hidden = !isVisible;
+      if (isVisible) visibleCount += 1;
+    });
+
+    if (archiveEmpty) archiveEmpty.hidden = visibleCount > 0;
+  };
+
+  archiveSearch?.addEventListener("input", updateArchive);
+  archiveFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+      activeFilter = button.dataset.archiveFilter || "all";
+      archiveFilters.forEach((filterButton) => {
+        filterButton.setAttribute("aria-pressed", String(filterButton === button));
+      });
+      updateArchive();
+    });
+  });
+
+  updateArchive();
+}
+
 // The masthead note can be dismissed for the current page view only.
 if (mastheadNote && dismissNote) {
   dismissNote.addEventListener("click", () => {
-    mastheadNote.hidden = true;
+    mastheadNote.classList.add("is-dismissing");
+    window.setTimeout(() => {
+      mastheadNote.hidden = true;
+    }, systemPrefersReducedMotion.matches ? 0 : 180);
   });
 }
 
-// Visual header state and scroll progress. Layout height stays stable.
+// Keep the header stack visually stable; only scroll progress changes.
 if (header) {
   const updateHeader = () => {
-    let compactChanged = false;
-    const currentY = window.scrollY;
     updateScrollProgress();
-
-    if (!headerLogoIsHidden && currentY > 28) {
-      headerLogoIsHidden = true;
-      header.classList.add("is-logo-hidden");
-      header.classList.add("is-scrolled");
-      compactChanged = true;
-    } else if (headerLogoIsHidden && currentY <= 1) {
-      headerLogoIsHidden = false;
-      header.classList.remove("is-logo-hidden");
-      header.classList.remove("is-scrolled");
-      compactChanged = true;
-    }
-
-    if (issueStrip && !issueStripIsHidden && currentY > 128) {
-      issueStripIsHidden = true;
-      issueStrip.classList.add("is-hidden");
-      compactChanged = true;
-    } else if (issueStrip && issueStripIsHidden && currentY < 72) {
-      issueStripIsHidden = false;
-      issueStrip.classList.remove("is-hidden");
-      compactChanged = true;
-    }
-    if (compactChanged) {
-      window.requestAnimationFrame(getHeaderOffset);
-    }
   };
 
   updateHeader();
@@ -362,14 +418,12 @@ const markCurrentPage = () => {
 
 markCurrentPage();
 
-// Section rail state for the journal front page.
-if (issueLinks.length) {
-  root.classList.add("has-issue-rail");
+// Reader controls use actual page sections; no visible section rail is needed.
+issueSections = issueLinks.length
+  ? issueLinks.map((link) => document.querySelector(link.getAttribute("href"))).filter(Boolean)
+  : Array.from(document.querySelectorAll("main > section[id]"));
 
-  issueSections = issueLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
-
+if (issueLinks.length || issueSections.length) {
   const setActiveLink = (id) => {
     issueLinks.forEach((link) => {
       const isActive = link.getAttribute("href") === `#${id}`;
@@ -472,48 +526,3 @@ const createReaderControls = () => {
 };
 
 createReaderControls();
-
-// Featured story carousel.
-if (topStories) {
-  const slides = Array.from(topStories.querySelectorAll("[data-story-slide]"));
-  const prevButton = topStories.querySelector("[data-story-prev]");
-  const nextButton = topStories.querySelector("[data-story-next]");
-  const storyCounter = topStories.querySelector("[data-story-counter]");
-  let activeStory = Math.max(0, slides.findIndex((slide) => slide.classList.contains("is-active")));
-
-  const setActiveStory = (index, direction = 1) => {
-    topStories.dataset.storyDirection = direction < 0 ? "previous" : "next";
-    activeStory = (index + slides.length) % slides.length;
-    slides.forEach((slide, slideIndex) => {
-      const isActive = slideIndex === activeStory;
-      slide.classList.toggle("is-active", isActive);
-      slide.setAttribute("aria-hidden", String(!isActive));
-    });
-    if (storyCounter) storyCounter.textContent = `${activeStory + 1} / ${slides.length}`;
-  };
-
-  if (slides.length > 1) {
-    topStories.classList.add("is-slider-ready");
-    topStories.dataset.storyDirection = "next";
-    prevButton?.addEventListener("click", () => setActiveStory(activeStory - 1, -1));
-    nextButton?.addEventListener("click", () => setActiveStory(activeStory + 1, 1));
-    setActiveStory(activeStory, 1);
-  }
-}
-
-// Utility for future copy buttons on source or embed fields.
-document.querySelectorAll("[data-copy-target]").forEach((button) => {
-  button.addEventListener("click", async () => {
-    const target = document.querySelector(button.dataset.copyTarget);
-    const status = button.parentElement?.querySelector("[data-copy-status]");
-
-    if (!target) return;
-
-    try {
-      await navigator.clipboard.writeText(target.value || target.textContent);
-      if (status) status.textContent = "Copied";
-    } catch {
-      if (status) status.textContent = "Select and copy manually";
-    }
-  });
-});

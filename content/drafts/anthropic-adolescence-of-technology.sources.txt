@@ -1,0 +1,8 @@
+Source checklist:
+- Use Dario Amodei's own essay as the central source.
+- Do not overstate Anthropic's claims beyond the essay.
+- Treat this as a personal interpretation, not a news report.
+
+Sources:
+- https://darioamodei.com/the-adolescence-of-technology
+- https://www.anthropic.com/news

@@ -3,19 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#001f35" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f2ead1" media="(prefers-color-scheme: light)">
     <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="Briefs index for appealofai.">
-    <title>Briefs | appealofai</title>
+    <meta name="description" content="Articles index for appealofai.">
+    <title>Index | appealofai</title>
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="appealofai">
-    <meta property="og:title" content="Briefs | appealofai">
+    <meta property="og:title" content="Index | appealofai">
     <meta property="og:description" content="Short reports, watchlists and field notes from appealofai.">
     <meta property="og:url" content="https://appealofai.sol.site/articles.html">
     <meta property="og:image" content="https://appealofai.sol.site/assets/img/social-card.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Briefs | appealofai">
+    <meta name="twitter:title" content="Index | appealofai">
     <meta name="twitter:description" content="Short reports, watchlists and field notes from appealofai.">
     <meta name="twitter:image" content="https://appealofai.sol.site/assets/img/social-card.png">
     <link rel="stylesheet" href="style.css">
@@ -33,87 +36,143 @@
             <svg class="sun-icon" viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"></path></svg>
           </span>
         </button>
-        <button class="icon-button menu-button" type="button" data-menu-toggle aria-label="Open menu" aria-controls="site-menu" aria-expanded="false"><span aria-hidden="true"></span></button>
       </div>
       <nav class="site-nav" id="site-menu" data-menu aria-label="Primary navigation">
         <a href="index.html">Journal</a>
-        <a href="articles.html" aria-current="page">Briefs</a>
-        <a href="about.html">About</a>
+        <a href="articles.html" aria-current="page">Index</a>
       </nav>
     </header>
 
     <noscript>
       <div class="no-js-banner">
-        JavaScript is off. Reading works normally; theme switching and dynamic controls are disabled.
+        JavaScript is off. Reading works normally; theme switching and archive filters are disabled.
       </div>
+      <style>
+        .archive-tools {
+          display: none;
+        }
+      </style>
     </noscript>
 
-    <div class="newsbar" data-news-strip data-breaking="false" data-last-updated="2026-06-07T12:00:00Z" aria-label="Notes ticker">
+    <div class="newsbar" data-news-strip data-breaking="false" data-last-updated="2026-06-10T12:00:00Z" aria-label="Notes ticker">
       <strong data-news-label>Notes</strong>
       <div class="ticker-track">
-        <span>AI search puts source links back in the spotlight</span>
-        <span>Creator style protection enters the policy debate</span>
-        <span>Agents move from demos into daily workflows</span>
-        <span>Image models become identity infrastructure</span>
-        <span>AI search puts source links back in the spotlight</span>
-        <span>Creator style protection enters the policy debate</span>
+        <a href="articles/ai-slop-social-text-fatigue.html">AI slop makes the public internet feel tired</a>
+        <a href="articles/messi-openai-football-campaign.html">Messi and OpenAI turn fan identity into an image prompt</a>
+        <a href="articles/anthropic-adolescence-of-technology.html">Anthropic frames AI as the adolescence of technology</a>
+        <a href="articles/grok-build-terminal-agent.html">Grok Build brings the coding-agent fight to the terminal</a>
+        <a href="articles/apple-intelligence-naming-trap.html">Apple's AI problem is naming before delivery</a>
       </div>
     </div>
 
-    <nav class="issue-rail page-rail" aria-label="Page navigation">
-      <a href="index.html">Journal</a>
-      <a href="articles.html" aria-current="page">Briefs</a>
-      <a href="about.html">About</a>
-    </nav>
-
     <main class="archive-page" id="main">
+      <div class="page-back">
+        <a href="index.html">Back to journal</a>
+      </div>
       <section class="section archive-hero">
-        <p class="section-label">Briefs</p>
-        <h1>Fast field notes with a source trail.</h1>
-        <p>The fast editorial layer: what happened, why it matters, and what still needs checking.</p>
+        <p class="section-label">Index</p>
+        <h1>Notes with a source trail.</h1>
+        <p>Current pieces, organized as a small reading index.</p>
+        <div class="archive-tools" aria-label="Article filters">
+          <label class="archive-search">
+            <span>Find</span>
+            <input type="search" data-archive-search placeholder="Search Claude, Apple, slop, agents">
+          </label>
+          <div class="archive-filter-list" aria-label="Topics">
+            <button type="button" data-archive-filter="all" aria-pressed="true">All</button>
+            <button type="button" data-archive-filter="models" aria-pressed="false">Models</button>
+            <button type="button" data-archive-filter="tools" aria-pressed="false">Tools</button>
+            <button type="button" data-archive-filter="infrastructure" aria-pressed="false">Infrastructure</button>
+            <button type="button" data-archive-filter="culture" aria-pressed="false">Culture</button>
+          </div>
+        </div>
       </section>
       <section class="section edition-list" aria-label="Article list">
-        <a class="edition-row" href="articles/first-signal.html">
-          <span>Note 001 &middot; Editorial</span>
+        <a class="edition-row" href="articles/messi-openai-football-campaign.html" data-archive-item data-topics="culture">
+          <span>Watch &middot; Sports</span>
           <div>
-            <h2>The First Appeal: outliving the feed.</h2>
-            <p>A draft manifesto for the site as archive and 𝕏 as distribution layer.</p>
+            <h2>Messi and OpenAI turn fan identity into an image prompt.</h2>
+            <p>Sports identity is an obvious stage for generative images: loyalty, color, self-image and public culture in one frame.</p>
+            <span class="card-cta">Read watch</span>
           </div>
         </a>
-        <article class="edition-row">
-          <span>Brief &middot; Starter topic</span>
+        <a class="edition-row" href="articles/ai-slop-social-text-fatigue.html" data-archive-item data-topics="culture">
+          <span>Lead &middot; Culture</span>
           <div>
-            <h2>When AI search rewrites the source layer.</h2>
-            <p>A concise brief on AI search, publisher attribution and why visible links matter for culture writing.</p>
+            <h2>AI slop is making the public internet feel tired.</h2>
+            <p>Synthetic text is not annoying because tools exist. It is annoying when nothing human has happened there.</p>
+            <span class="card-cta">Read lead</span>
           </div>
-        </article>
-        <article class="edition-row">
-          <span>Watchlist &middot; Starter topic</span>
+        </a>
+        <a class="edition-row" href="articles/anthropic-adolescence-of-technology.html" data-archive-item data-topics="models culture">
+          <span>Watch &middot; Anthropic</span>
           <div>
-            <h2>Three notes worth watching this week.</h2>
-            <p>Creator style protection, agent workflows and image models as public identity infrastructure.</p>
+            <h2>Anthropic's adolescence warning is really about growing up in public.</h2>
+            <p>Powerful, immature and already consequential is a better frame than miracle versus scam.</p>
+            <span class="card-cta">Read article</span>
           </div>
-        </article>
-        <article class="edition-row">
-          <span>Policy Brief &middot; Starter topic</span>
+        </a>
+        <a class="edition-row" href="articles/first-signal.html" data-archive-item data-topics="models culture">
+          <span>Article &middot; Claude</span>
           <div>
-            <h2>Creator protection is becoming a product question.</h2>
-            <p>A short note on opt-outs, provenance labels, style references and the tension between tooling and trust.</p>
+            <h2>Claude Fable 5 makes the model release feel like a governance story.</h2>
+            <p>Capability matters. But the sharper signal is how a model asks to be trusted.</p>
+            <span class="card-cta">Read note</span>
           </div>
-        </article>
-        <article class="edition-row">
-          <span>Interface Brief &middot; Starter topic</span>
+        </a>
+        <a class="edition-row" href="articles/apple-intelligence-naming-trap.html" data-archive-item data-topics="culture tools">
+          <span>Article &middot; Apple</span>
           <div>
-            <h2>The agent is the new settings page.</h2>
-            <p>A starter brief for tracking how delegated workflows change software habits, accountability and taste.</p>
+            <h2>Apple Intelligence still has a naming problem.</h2>
+            <p>The brand promise is beautiful. The delivery gap makes every ordinary Siri moment louder.</p>
+            <span class="card-cta">Read article</span>
           </div>
-        </article>
+        </a>
+        <a class="edition-row" href="articles/grok-build-terminal-agent.html" data-archive-item data-topics="tools">
+          <span>Article &middot; Developer Tools</span>
+          <div>
+            <h2>Grok Build makes the coding-agent race feel official.</h2>
+            <p>xAI puts Grok in the terminal, where the model can meet plans, files, diffs and review.</p>
+            <span class="card-cta">Read article</span>
+          </div>
+        </a>
+        <a class="edition-row" href="articles/spacex-orbital-ai-compute.html" data-archive-item data-topics="infrastructure">
+          <span>Article &middot; Space</span>
+          <div>
+            <h2>AI data centers in orbit are absurd and logical.</h2>
+            <p>The idea sounds wild. The compute hunger underneath it sounds completely believable.</p>
+            <span class="card-cta">Read article</span>
+          </div>
+        </a>
+        <a class="edition-row" href="articles/ai-infrastructure-not-bubble.html" data-archive-item data-topics="infrastructure culture">
+          <span>Article &middot; Infrastructure</span>
+          <div>
+            <h2>The AI bubble question is really an infrastructure question.</h2>
+            <p>The simple bubble take misses the physical story: power, cooling, chips, grids and useful intelligence per watt.</p>
+            <span class="card-cta">Read article</span>
+          </div>
+        </a>
+        <a class="edition-row" href="articles/vibe-coding-expertise-leverage.html" data-archive-item data-topics="tools culture">
+          <span>Article &middot; Craft</span>
+          <div>
+            <h2>Vibe coding is leverage, not a replacement for judgment.</h2>
+            <p>AI-assisted programming is strongest when the human still knows what good software feels like.</p>
+            <span class="card-cta">Read article</span>
+          </div>
+        </a>
+        <p class="archive-empty" data-archive-empty hidden>No matching notes yet.</p>
       </section>
     </main>
 
     <footer class="site-footer">
       <span>&copy; 2026 appealofai &middot; Personal opinion only &middot; No professional advice &middot; Verify sources and context</span>
-      <nav aria-label="Legal navigation"><a class="x-link" href="https://x.com/appealofai"><span aria-hidden="true">𝕏</span><span>@appealofai</span></a><a href="legal.html">Legal</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a></nav>
+      <nav aria-label="Legal navigation">
+        <a class="x-link" href="https://x.com/appealofai"><span>@appealofai on &#120143;</span></a>
+        <a href="about.html">About</a>
+        <a href="legal.html">Legal</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
     </footer>
     <script src="script.js"></script>
   </body>
