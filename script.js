@@ -23,11 +23,26 @@ const themeFromUrl = new URLSearchParams(window.location.search).get("theme");
 const initialTheme = themeFromUrl === "light" || themeFromUrl === "dark" ? themeFromUrl : systemTheme;
 root.dataset.theme = initialTheme;
 
-const cleanThemeUrl = () => {
-  if (!themeFromUrl || !window.history.replaceState) return;
+const getCleanDisplayUrl = (href) => {
+  const url = new URL(href, window.location.href);
+  if (url.protocol === "file:") return url.href;
+
+  url.pathname = url.pathname
+    .replace(/\/index\.html$/i, "/")
+    .replace(/\/(notes|about|legal|terms|privacy)\.html$/i, "/$1")
+    .replace(/\/articles\/([^/]+)\.html$/i, "/articles/$1");
+
+  return url.href;
+};
+
+const cleanInitialUrl = () => {
+  if (!window.history.replaceState) return;
   const url = new URL(window.location.href);
-  url.searchParams.delete("theme");
-  window.history.replaceState({}, "", url.href);
+  if (themeFromUrl) url.searchParams.delete("theme");
+  const cleanUrl = getCleanDisplayUrl(url.href);
+  if (cleanUrl !== window.location.href) {
+    window.history.replaceState({}, "", cleanUrl);
+  }
 };
 
 const updateThemeButton = () => {
@@ -36,7 +51,7 @@ const updateThemeButton = () => {
   themeToggle.setAttribute("aria-label", isLight ? "Toggle dark mode" : "Toggle light mode");
 };
 
-cleanThemeUrl();
+cleanInitialUrl();
 updateThemeButton();
 
 // Remove broken optional assets instead of showing empty image frames.
@@ -232,10 +247,17 @@ const setupTickerMotion = () => {
     if (!frame) frame = window.requestAnimationFrame(step);
   };
 
-  tickerTrack.addEventListener("pointerenter", () => setRate(0.42));
-  tickerTrack.addEventListener("pointerleave", () => setRate(1));
-  tickerTrack.addEventListener("focusin", () => setRate(0.42));
-  tickerTrack.addEventListener("focusout", () => setRate(1));
+  const slowTicker = () => setRate(0.42);
+  const touchTicker = () => setRate(0.24);
+  const restoreTicker = () => setRate(1);
+
+  tickerTrack.addEventListener("pointerenter", slowTicker);
+  tickerTrack.addEventListener("pointerleave", restoreTicker);
+  tickerTrack.addEventListener("focusin", slowTicker);
+  tickerTrack.addEventListener("focusout", restoreTicker);
+  newsStrip?.addEventListener("pointerdown", touchTicker);
+  newsStrip?.addEventListener("pointerup", restoreTicker);
+  newsStrip?.addEventListener("pointercancel", restoreTicker);
 };
 
 setupTickerMotion();
@@ -386,16 +408,17 @@ if (themeToggle) {
 // Active page state for the top navigation.
 const markCurrentPage = () => {
   const path = window.location.pathname;
-  const currentPath = path.split("/").pop() || "index.html";
+  const currentPath = (path.split("/").pop() || "index").replace(/\.html$/i, "");
   let currentLink = null;
 
   document.querySelectorAll(".site-nav a").forEach((link) => {
     const linkPath = link.getAttribute("href")?.split("#")[0] || "";
-    const isArticlePage = path.includes("/articles/") && linkPath.includes("articles.html");
-    if (linkPath === currentPath || isArticlePage) {
+    const normalizedLinkPath = (linkPath.split("/").pop() || "index").replace(/\.html$/i, "");
+    const isArticlePage = path.includes("/articles/") && normalizedLinkPath === "notes";
+    if (normalizedLinkPath === currentPath || isArticlePage) {
       link.setAttribute("aria-current", "page");
       currentLink = link;
-    } else if (link.getAttribute("href") !== "index.html") {
+    } else if (normalizedLinkPath !== "index") {
       link.removeAttribute("aria-current");
     }
   });
@@ -409,7 +432,7 @@ markCurrentPage();
 // Reader controls use actual page sections; no visible section rail is needed.
 issueSections = issueLinks.length
   ? issueLinks.map((link) => document.querySelector(link.getAttribute("href"))).filter(Boolean)
-  : Array.from(document.querySelectorAll("main > section[id]"));
+  : [];
 
 if (issueLinks.length || issueSections.length) {
   const setActiveLink = (id) => {

@@ -79,18 +79,19 @@
       "status": "published",
       "type": "article",
       "date": "2026-06-10",
-      "updated": "2026-06-10T12:30:00Z",
+      "updated": "2026-06-11T17:00:00Z",
       "title": "Grok Build makes the coding-agent race feel official.",
-      "tickerTitle": "Grok Build brings the coding-agent fight to the terminal",
-      "summary": "xAI's Grok Build Beta turns Grok into a terminal coding agent, which makes the developer workflow itself part of the AI platform war.",
+      "tickerTitle": "Grok puts the coding-agent race inside the terminal",
+      "summary": "xAI's Grok Build Beta turns Grok into a terminal coding agent, while fresh safety questions keep the tool story from becoming pure hype.",
       "url": "articles/grok-build-terminal-agent.html",
       "image": "assets/img/social-card.png",
       "tags": ["grok", "coding-agents", "developer-tools", "xai"],
       "sources": [
         "https://x.ai/cli",
-        "https://docs.x.ai/"
+        "https://docs.x.ai/",
+        "https://www.theguardian.com/technology/2026/jun/11/xai-sues-engineer-grok-safety-concerns"
       ],
-      "xPost": "Grok Build is less interesting as a single CLI and more interesting as a signal: coding agents are becoming platform surfaces. Chat is not enough. The model wants the repo, the terminal, the plan, the diff, the review."
+      "xPost": "Grok Build is less interesting as one CLI and more interesting as a signal: coding agents are becoming platform surfaces. The model wants the repo, terminal, plan, diff and review. The safety questions need to sit right next to the excitement."
     },
     {
       "id": "messi-openai-football-campaign",
