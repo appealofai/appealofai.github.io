@@ -356,26 +356,79 @@ const setupTickerMotion = () => {
 
     window.requestAnimationFrame(tick);
   };
+  const getTickerReadingBounds = () => {
+    const stripRect = newsStrip.getBoundingClientRect();
+    const labelWidth = newsLabel?.getBoundingClientRect().width || 92;
+    const edgeWidth = Number.parseFloat(getComputedStyle(newsStrip).getPropertyValue("--ticker-edge-width")) || 56;
+    const inset = edgeWidth + 8;
+    return {
+      left: stripRect.left + labelWidth + inset,
+      right: stripRect.right - inset,
+      width: Math.max(120, stripRect.width - labelWidth - inset * 2),
+    };
+  };
+  const getUniqueTickerItems = () => {
+    const seen = new Set();
+    return Array.from(tickerTrack.querySelectorAll("[data-ticker-index]")).filter((item) => {
+      const index = item.dataset.tickerIndex;
+      if (seen.has(index)) return false;
+      seen.add(index);
+      return true;
+    });
+  };
+  const getTickerItems = () => Array.from(tickerTrack.querySelectorAll("[data-ticker-index]"));
+  const getMostVisibleTickerIndex = () => {
+    const bounds = getTickerReadingBounds();
+    const winner = getTickerItems().reduce((best, item) => {
+      const rect = item.getBoundingClientRect();
+      const visible = Math.max(0, Math.min(rect.right, bounds.right) - Math.max(rect.left, bounds.left));
+      return visible > best.visible ? { visible, index: Number(item.dataset.tickerIndex) } : best;
+    }, { visible: 0, index: 0 });
+
+    return Number.isFinite(winner.index) ? winner.index : 0;
+  };
+  const getBestActiveTickerItem = (index, targetCenter, travelDistance, duration, tickerAnimation) => {
+    if (!travelDistance || !duration) return null;
+    const currentTime = Number(tickerAnimation.currentTime) || 0;
+    return getTickerItems()
+      .filter((item) => Number(item.dataset.tickerIndex) === index)
+      .map((item) => {
+        const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+        const desiredTranslate = targetCenter - tickerTrack.offsetLeft - itemCenter;
+        const progress = ((-desiredTranslate / travelDistance) % 1 + 1) % 1;
+        const targetTime = progress * duration;
+        const delta = Math.abs(((targetTime - currentTime + duration / 2) % duration) - duration / 2);
+        return { item, targetTime, delta };
+      })
+      .sort((a, b) => a.delta - b.delta)[0];
+  };
   const nudgeTicker = (direction) => {
     window.clearTimeout(resumeTimer);
-    const itemCount = tickerItemCount || tickerTrack.querySelectorAll("[data-ticker-index]").length || 1;
+    const items = getUniqueTickerItems();
+    const itemCount = tickerItemCount || items.length || 1;
+    const currentIndex = activeTickerIndex ?? getMostVisibleTickerIndex();
     activeTickerIndex = activeTickerIndex === null
-      ? (direction > 0 ? 0 : itemCount - 1)
+      ? (currentIndex + direction + itemCount) % itemCount
       : (activeTickerIndex + direction + itemCount) % itemCount;
     updateTickerSelection();
     const animations = tickerTrack.getAnimations();
     const tickerAnimation = animations[0];
-    const activeItem = tickerTrack.querySelector(`[data-ticker-index="${activeTickerIndex}"]`);
+    let activeItem = items.find((item) => Number(item.dataset.tickerIndex) === activeTickerIndex)
+      || tickerTrack.querySelector(`[data-ticker-index="${activeTickerIndex}"]`);
 
     if (tickerAnimation && activeItem && !systemPrefersReducedMotion.matches) {
       const timing = tickerAnimation.effect?.getTiming();
       const duration = Number(timing?.duration) || 38000;
       const travelDistance = tickerTrack.scrollWidth / 2;
-      const targetCenter = newsStrip.clientWidth / 2;
-      const itemCenter = activeItem.offsetLeft + activeItem.offsetWidth / 2;
-      const desiredTranslate = targetCenter - tickerTrack.offsetLeft - itemCenter;
-      const progress = ((-desiredTranslate / travelDistance) % 1 + 1) % 1;
-      animateTickerToTime(tickerAnimation, progress * duration, duration);
+      const bounds = getTickerReadingBounds();
+      const stripRect = newsStrip.getBoundingClientRect();
+      const itemWidth = activeItem.getBoundingClientRect().width;
+      const targetCenter = itemWidth > bounds.width
+        ? bounds.left - stripRect.left + itemWidth / 2
+        : (bounds.left + bounds.right) / 2 - stripRect.left;
+      const bestItem = getBestActiveTickerItem(activeTickerIndex, targetCenter, travelDistance, duration, tickerAnimation);
+      activeItem = bestItem?.item || activeItem;
+      animateTickerToTime(tickerAnimation, bestItem?.targetTime ?? 0, duration);
     } else {
       activeItem?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
     }

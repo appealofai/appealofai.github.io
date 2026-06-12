@@ -1,6 +1,22 @@
 {
-  "updated": "2026-06-11T16:00:00Z",
+  "updated": "2026-06-12T12:00:00Z",
   "items": [
+    {
+      "id": "the-appeal-of-ai",
+      "status": "published",
+      "type": "opinion",
+      "date": "2026-06-12",
+      "updated": "2026-06-12T12:00:00Z",
+      "title": "The appeal of AI is agency, not magic.",
+      "tickerTitle": "The appeal of AI is agency, not magic",
+      "summary": "A personal launch note for Appeal of AI: the positive case for useful machine intelligence without pretending the hard parts are small.",
+      "url": "articles/the-appeal-of-ai.html",
+      "topics": [
+        "culture",
+        "policy",
+        "infrastructure"
+      ]
+    },
     {
       "id": "claude-fable-safeguards",
       "status": "published",
