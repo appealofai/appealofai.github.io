@@ -8,6 +8,10 @@ const currentDate = document.querySelector("[data-current-date]");
 const newsStrip = document.querySelector("[data-news-strip]");
 const newsLabel = document.querySelector("[data-news-label]");
 const tickerTrack = document.querySelector(".ticker-track");
+let tickerPrev = null;
+let tickerNext = null;
+let activeTickerIndex = 0;
+let tickerItemCount = 0;
 const issueStrip = document.querySelector(".issue-strip");
 const archiveSearch = document.querySelector("[data-archive-search]");
 const archiveFilters = Array.from(document.querySelectorAll("[data-archive-filter]"));
@@ -196,12 +200,19 @@ const renderTickerFromArticles = (items = []) => {
   updateNewsLabel();
 
   const repeatedItems = [...tickerItems, ...tickerItems];
-  tickerTrack.replaceChildren(...repeatedItems.map((item) => {
+  tickerItemCount = tickerItems.length;
+  activeTickerIndex = 0;
+  tickerTrack.replaceChildren(...repeatedItems.map((item, index) => {
     const element = item.url ? document.createElement("a") : document.createElement("span");
-    element.textContent = getTickerTitle(item);
+    const label = document.createElement("span");
+    label.className = "ticker-text";
+    label.textContent = getTickerTitle(item);
+    element.dataset.tickerIndex = String(index % tickerItems.length);
+    element.append(label);
     if (item.url) element.href = getSiteRelativeUrl(item.url);
     return element;
   }));
+  updateTickerSelection();
   setupTickerMotion();
 };
 
@@ -220,13 +231,74 @@ const loadArticleFeed = async () => {
 
 loadArticleFeed();
 
+const setupTickerControls = () => {
+  if (!newsStrip || !tickerTrack || newsStrip.querySelector(".ticker-control")) return;
+
+  const controls = document.createElement("div");
+  controls.className = "ticker-controls";
+  controls.setAttribute("aria-label", "Ticker controls");
+
+  tickerPrev = document.createElement("button");
+  tickerPrev.className = "ticker-control ticker-control-prev";
+  tickerPrev.type = "button";
+  tickerPrev.setAttribute("aria-label", "Previous note");
+  tickerPrev.textContent = "\u2039";
+
+  tickerNext = document.createElement("button");
+  tickerNext.className = "ticker-control ticker-control-next";
+  tickerNext.type = "button";
+  tickerNext.setAttribute("aria-label", "Next note");
+  tickerNext.textContent = "\u203a";
+
+  controls.append(tickerPrev, tickerNext);
+  newsStrip.append(controls);
+};
+
+const ensureTickerItemIndexes = () => {
+  if (!tickerTrack) return;
+  const items = Array.from(tickerTrack.querySelectorAll("a, span"));
+  if (!items.length || items.some((item) => item.dataset.tickerIndex)) return;
+
+  const tickerItems = items.filter((item) => item.parentElement === tickerTrack);
+  tickerItemCount = tickerItems.length;
+  tickerItems.forEach((item, index) => {
+    const text = item.textContent;
+    item.textContent = "";
+    const label = document.createElement("span");
+    label.className = "ticker-text";
+    label.textContent = text;
+    item.append(label);
+    item.dataset.tickerIndex = String(index);
+  });
+  updateTickerSelection();
+};
+
+const updateTickerSelection = () => {
+  if (!tickerTrack) return;
+  const items = Array.from(tickerTrack.querySelectorAll("[data-ticker-index]"));
+  if (!items.length) return;
+
+  items.forEach((item) => {
+    const isActive = Number(item.dataset.tickerIndex) === activeTickerIndex;
+    item.classList.toggle("is-active", isActive);
+    if (isActive) {
+      item.setAttribute("aria-current", "true");
+    } else {
+      item.removeAttribute("aria-current");
+    }
+  });
+};
+
 const setupTickerMotion = () => {
-  if (!tickerTrack || systemPrefersReducedMotion.matches) return;
+  if (!tickerTrack) return;
+  setupTickerControls();
+  ensureTickerItemIndexes();
   if (tickerTrack.dataset.motionReady === "true") return;
   tickerTrack.dataset.motionReady = "true";
   let frame = 0;
   let currentRate = 1;
   let targetRate = 1;
+  let resumeTimer = 0;
 
   const step = () => {
     currentRate += (targetRate - currentRate) * 0.12;
@@ -250,16 +322,61 @@ const setupTickerMotion = () => {
   const slowTicker = () => setRate(0.42);
   const touchTicker = () => setRate(0.24);
   const restoreTicker = () => setRate(1);
+  const pauseTicker = () => {
+    tickerTrack.getAnimations().forEach((animation) => animation.pause());
+  };
+  const resumeTicker = () => {
+    tickerTrack.getAnimations().forEach((animation) => animation.play());
+    restoreTicker();
+  };
+  const nudgeTicker = (direction) => {
+    window.clearTimeout(resumeTimer);
+    const itemCount = tickerItemCount || tickerTrack.querySelectorAll("[data-ticker-index]").length || 1;
+    activeTickerIndex = (activeTickerIndex + direction + itemCount) % itemCount;
+    updateTickerSelection();
+    const animations = tickerTrack.getAnimations();
+    const tickerAnimation = animations[0];
 
-  tickerTrack.addEventListener("pointerenter", slowTicker);
-  tickerTrack.addEventListener("pointerleave", restoreTicker);
-  tickerTrack.addEventListener("focusin", slowTicker);
-  tickerTrack.addEventListener("focusout", restoreTicker);
-  newsStrip?.addEventListener("pointerdown", touchTicker);
-  newsStrip?.addEventListener("pointerup", restoreTicker);
-  newsStrip?.addEventListener("pointercancel", restoreTicker);
+    if (tickerAnimation && !systemPrefersReducedMotion.matches) {
+      const timing = tickerAnimation.effect?.getTiming();
+      const duration = Number(timing?.duration) || 38000;
+      const currentTime = Number(tickerAnimation.currentTime) || 0;
+      tickerAnimation.currentTime = (currentTime + direction * duration * 0.11 + duration) % duration;
+      pauseTicker();
+    } else {
+      newsStrip?.scrollBy({ left: direction * Math.round(newsStrip.clientWidth * 0.72), behavior: "smooth" });
+    }
+
+    resumeTimer = window.setTimeout(resumeTicker, 4200);
+  };
+
+  if (!systemPrefersReducedMotion.matches) {
+    tickerTrack.addEventListener("pointerenter", slowTicker);
+    tickerTrack.addEventListener("pointerleave", restoreTicker);
+    tickerTrack.addEventListener("focusin", slowTicker);
+    tickerTrack.addEventListener("focusout", restoreTicker);
+    newsStrip?.addEventListener("pointerdown", touchTicker);
+    newsStrip?.addEventListener("pointerup", restoreTicker);
+    newsStrip?.addEventListener("pointercancel", restoreTicker);
+  }
+
+  tickerTrack.addEventListener("click", (event) => {
+    const item = event.target.closest("[data-ticker-index]");
+    if (!item) return;
+    window.clearTimeout(resumeTimer);
+    activeTickerIndex = Number(item.dataset.tickerIndex) || 0;
+    updateTickerSelection();
+    if (!systemPrefersReducedMotion.matches) {
+      pauseTicker();
+      resumeTimer = window.setTimeout(resumeTicker, 4200);
+    }
+  });
+
+  tickerPrev?.addEventListener("click", () => nudgeTicker(-1));
+  tickerNext?.addEventListener("click", () => nudgeTicker(1));
 };
 
+setupTickerControls();
 setupTickerMotion();
 
 // Simple archive search and topic filters.
