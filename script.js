@@ -10,7 +10,7 @@ const newsLabel = document.querySelector("[data-news-label]");
 const tickerTrack = document.querySelector(".ticker-track");
 let tickerPrev = null;
 let tickerNext = null;
-let activeTickerIndex = 0;
+let activeTickerIndex = null;
 let tickerItemCount = 0;
 const issueStrip = document.querySelector(".issue-strip");
 const archiveSearch = document.querySelector("[data-archive-search]");
@@ -201,7 +201,7 @@ const renderTickerFromArticles = (items = []) => {
 
   const repeatedItems = [...tickerItems, ...tickerItems];
   tickerItemCount = tickerItems.length;
-  activeTickerIndex = 0;
+  activeTickerIndex = null;
   tickerTrack.replaceChildren(...repeatedItems.map((item, index) => {
     const element = item.url ? document.createElement("a") : document.createElement("span");
     const label = document.createElement("span");
@@ -279,7 +279,7 @@ const updateTickerSelection = () => {
   if (!items.length) return;
 
   items.forEach((item) => {
-    const isActive = Number(item.dataset.tickerIndex) === activeTickerIndex;
+    const isActive = activeTickerIndex !== null && Number(item.dataset.tickerIndex) === activeTickerIndex;
     item.classList.toggle("is-active", isActive);
     if (isActive) {
       item.setAttribute("aria-current", "true");
@@ -329,22 +329,55 @@ const setupTickerMotion = () => {
     tickerTrack.getAnimations().forEach((animation) => animation.play());
     restoreTicker();
   };
+  const animateTickerToTime = (animation, targetTime, duration) => {
+    const startTime = Number(animation.currentTime) || 0;
+    let endTime = targetTime;
+    const halfDuration = duration / 2;
+
+    if (Math.abs(endTime - startTime) > halfDuration) {
+      endTime += endTime > startTime ? -duration : duration;
+    }
+
+    const startedAt = performance.now();
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    pauseTicker();
+
+    const tick = (now) => {
+      const progress = Math.min(1, (now - startedAt) / 460);
+      const eased = ease(progress);
+      animation.currentTime = ((startTime + (endTime - startTime) * eased) % duration + duration) % duration;
+
+      if (progress < 1) {
+        window.requestAnimationFrame(tick);
+      } else {
+        pauseTicker();
+      }
+    };
+
+    window.requestAnimationFrame(tick);
+  };
   const nudgeTicker = (direction) => {
     window.clearTimeout(resumeTimer);
     const itemCount = tickerItemCount || tickerTrack.querySelectorAll("[data-ticker-index]").length || 1;
-    activeTickerIndex = (activeTickerIndex + direction + itemCount) % itemCount;
+    activeTickerIndex = activeTickerIndex === null
+      ? (direction > 0 ? 0 : itemCount - 1)
+      : (activeTickerIndex + direction + itemCount) % itemCount;
     updateTickerSelection();
     const animations = tickerTrack.getAnimations();
     const tickerAnimation = animations[0];
+    const activeItem = tickerTrack.querySelector(`[data-ticker-index="${activeTickerIndex}"]`);
 
-    if (tickerAnimation && !systemPrefersReducedMotion.matches) {
+    if (tickerAnimation && activeItem && !systemPrefersReducedMotion.matches) {
       const timing = tickerAnimation.effect?.getTiming();
       const duration = Number(timing?.duration) || 38000;
-      const currentTime = Number(tickerAnimation.currentTime) || 0;
-      tickerAnimation.currentTime = (currentTime + direction * duration * 0.11 + duration) % duration;
-      pauseTicker();
+      const travelDistance = tickerTrack.scrollWidth / 2;
+      const targetCenter = newsStrip.clientWidth / 2;
+      const itemCenter = activeItem.offsetLeft + activeItem.offsetWidth / 2;
+      const desiredTranslate = targetCenter - tickerTrack.offsetLeft - itemCenter;
+      const progress = ((-desiredTranslate / travelDistance) % 1 + 1) % 1;
+      animateTickerToTime(tickerAnimation, progress * duration, duration);
     } else {
-      newsStrip?.scrollBy({ left: direction * Math.round(newsStrip.clientWidth * 0.72), behavior: "smooth" });
+      activeItem?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
     }
 
     resumeTimer = window.setTimeout(resumeTicker, 4200);
@@ -359,18 +392,6 @@ const setupTickerMotion = () => {
     newsStrip?.addEventListener("pointerup", restoreTicker);
     newsStrip?.addEventListener("pointercancel", restoreTicker);
   }
-
-  tickerTrack.addEventListener("click", (event) => {
-    const item = event.target.closest("[data-ticker-index]");
-    if (!item) return;
-    window.clearTimeout(resumeTimer);
-    activeTickerIndex = Number(item.dataset.tickerIndex) || 0;
-    updateTickerSelection();
-    if (!systemPrefersReducedMotion.matches) {
-      pauseTicker();
-      resumeTimer = window.setTimeout(resumeTicker, 4200);
-    }
-  });
 
   tickerPrev?.addEventListener("click", () => nudgeTicker(-1));
   tickerNext?.addEventListener("click", () => nudgeTicker(1));

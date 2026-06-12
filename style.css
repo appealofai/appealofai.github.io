@@ -448,13 +448,14 @@ p {
   width: fit-content;
   max-width: 100%;
   align-items: center;
-  gap: 2px;
+  gap: 0;
   overflow-x: auto;
-  padding: 4px;
-  border: 1px solid color-mix(in srgb, var(--line), transparent 42%);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-soft), var(--bg) 74%);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text), transparent 92%);
+  padding: 0 8px;
+  border: 1px solid color-mix(in srgb, var(--line), transparent 44%);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-soft), var(--text) 4%), color-mix(in srgb, var(--surface-soft), transparent 18%));
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--line), transparent 54%);
   color: var(--muted);
   font-family: var(--font-sans);
   font-size: clamp(15px, 1.55vw, 17px);
@@ -491,38 +492,66 @@ p {
   flex: 0 0 auto;
   position: relative;
   scroll-snap-align: start;
-  min-height: 36px;
-  padding: 8px clamp(18px, 1.8vw, 24px);
-  border: 1px solid transparent;
-  border-radius: 999px;
-  background: transparent;
+  min-height: 44px;
+  padding: 10px clamp(18px, 2vw, 28px) 14px;
+  border: 0;
+  border-radius: 6px 6px 0 0;
+  background: transparent !important;
   letter-spacing: 0.01em;
   box-shadow: none;
   transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .site-nav a:first-child {
-  border-radius: 999px;
+  border-radius: 6px 6px 0 0;
 }
 
 .site-nav a:last-child {
-  border-right-width: 1px;
-  border-radius: 999px;
+  border-radius: 6px 6px 0 0;
 }
 
 .site-nav a:hover,
 .site-nav a[aria-current="page"] {
-  border-color: color-mix(in srgb, var(--accent), transparent 34%);
-  background: color-mix(in srgb, var(--accent), var(--bg) 82%);
-  box-shadow: 0 8px 22px color-mix(in srgb, var(--bg-deep), transparent 58%);
+  background: color-mix(in srgb, var(--surface-soft), var(--accent) 4%);
+  box-shadow: none;
   color: var(--accent);
 }
 
 .site-nav a[aria-current="page"]::after {
-  display: none;
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  left: 0;
+  display: block;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent), transparent 70%);
+  content: "";
 }
 
 .site-nav a::before {
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  left: 0;
+  display: block;
+  height: 3px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent), transparent 54%);
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.42);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.site-nav a:hover::before,
+.site-nav a:focus-visible::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.site-nav a[aria-current="page"]::before {
   display: none;
 }
 
@@ -549,6 +578,7 @@ p {
   width: 38px;
   height: 38px;
   place-items: center;
+  align-self: center;
   border: 1px solid color-mix(in srgb, var(--quiet), transparent 62%);
   border-radius: 50%;
   background: color-mix(in srgb, var(--bg), transparent 34%);
@@ -1032,6 +1062,8 @@ p {
 }
 
 .top-story-card {
+  display: flex;
+  flex-direction: column;
   align-content: start;
   min-height: 100%;
   padding: clamp(18px, 2.1vw, 24px);
@@ -1094,6 +1126,7 @@ p {
 }
 
 .top-story-card:first-child {
+  display: grid;
   grid-column: 1 / -1;
   grid-template-columns: minmax(0, 0.68fr) minmax(0, 1fr);
   column-gap: clamp(18px, 3vw, 34px);
@@ -1101,23 +1134,23 @@ p {
   align-items: center;
 }
 
-.top-story-card {
-  display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
-}
-
 .top-story-card .card-cta {
+  margin-top: auto;
   align-self: end;
 }
 
 .top-story-card .card-visual {
-  max-height: 138px;
+  height: clamp(170px, 14vw, 220px);
+  min-height: 0;
+  max-height: none;
+  object-fit: cover;
 }
 
 .top-story-card:first-child .card-visual {
   grid-column: 1;
   grid-row: 1 / span 4;
   margin-bottom: 0;
+  height: auto;
   max-height: none;
   min-height: clamp(170px, 18vw, 235px);
 }
@@ -1212,7 +1245,7 @@ p {
   display: flex;
   gap: 0;
   min-width: max-content;
-  padding: 10px 0 10px 4px;
+  padding: 10px clamp(58px, 8vw, 92px) 10px clamp(58px, 8vw, 92px);
   animation: ticker 38s linear infinite;
   touch-action: pan-x;
 }
@@ -1364,6 +1397,8 @@ p {
   display: block;
   width: fit-content;
   margin: 0 0 clamp(6px, 1.4vw, 12px);
+  background: transparent !important;
+  box-shadow: none;
   color: var(--accent);
   font-family: "Dr Sugiyama", cursive;
   font-size: clamp(25px, 3.1vw, 40px);
@@ -1394,6 +1429,8 @@ p {
 
 .issue-masthead .hero-slogan {
   max-width: none;
+  background: transparent;
+  box-shadow: none;
   color: var(--accent);
   font-family: "Dr Sugiyama", cursive;
   font-size: clamp(36px, 3vw, 44px);
@@ -2407,9 +2444,31 @@ h2 {
   display: none;
 }
 
-.site-footer > span {
+.site-footer > span,
+.site-footer > p {
   max-width: 78ch;
   line-height: 1.45;
+  margin: 0;
+}
+
+.footer-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  align-items: baseline;
+  max-width: 76ch;
+}
+
+.footer-line > span {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.footer-line > span:not(:last-child)::after {
+  margin-inline: 7px;
+  color: color-mix(in srgb, var(--quiet), transparent 18%);
+  content: "\00b7";
 }
 
 .site-footer nav {
@@ -2488,9 +2547,9 @@ h2 {
     position: static;
     display: flex;
     width: fit-content;
-    gap: 2px;
+    gap: 0;
     overflow: visible;
-    padding: 4px;
+    padding: 0 8px;
     opacity: 1;
     pointer-events: auto;
     transform: none;
@@ -2499,7 +2558,7 @@ h2 {
   }
 
   .site-nav a {
-    padding: 10px clamp(20px, 2.2vw, 28px);
+    padding: 10px clamp(18px, 2vw, 28px) 14px;
   }
 
   .menu-button {
@@ -2549,13 +2608,13 @@ h2 {
     justify-self: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 9px;
+    gap: 0;
     overflow: visible;
-    padding-bottom: 0;
+    padding: 0 8px;
   }
 
   .site-nav a {
-    padding: 9px 17px;
+    padding: 9px clamp(18px, 2vw, 26px) 13px;
   }
 }
 
@@ -2578,9 +2637,9 @@ h2 {
     width: min(calc(100vw - 96px), 330px);
     max-width: 100%;
     justify-content: center;
-    gap: 2px;
+    gap: 0;
     overflow: visible;
-    padding: 4px;
+    padding: 0 8px;
   }
 
   .site-nav a {
@@ -2588,18 +2647,14 @@ h2 {
     flex: 1 1 0;
     min-width: 0;
     place-items: center;
-    min-height: 36px;
-    padding: 7px 12px;
+    min-height: 40px;
+    padding: 8px 12px 12px;
     border-color: transparent;
-    border-radius: 999px;
+    border-radius: 0;
     text-align: center;
     font-size: 12.5px;
     line-height: 1.05;
     white-space: normal;
-  }
-
-  .site-nav a[aria-current="page"]::after {
-    display: none;
   }
 
   .newsbar strong {
@@ -2836,6 +2891,11 @@ h2 {
 
   .top-story-card p {
     display: block;
+    min-height: auto;
+  }
+
+  .top-story-card h2 {
+    min-height: 0;
   }
 
   .issue-masthead {
@@ -2952,9 +3012,11 @@ h2 {
 .site-header .header-actions,
 .home-page .site-header .header-actions {
   position: absolute;
+  top: 50%;
   right: clamp(18px, 3vw, 54px);
   grid-column: auto;
   grid-row: 1;
+  transform: translateY(-50%);
 }
 
 @media (max-width: 720px) {
@@ -2989,7 +3051,10 @@ h2 {
 
 .ticker-controls {
   position: absolute;
-  inset: 0 max(7px, env(safe-area-inset-right)) 0 max(7px, env(safe-area-inset-left));
+  top: 0;
+  right: max(7px, env(safe-area-inset-right));
+  bottom: 0;
+  left: calc(92px + max(7px, env(safe-area-inset-left)));
   z-index: 5;
   display: inline-flex;
   align-items: center;
@@ -2997,6 +3062,29 @@ h2 {
   opacity: 1;
   pointer-events: none;
   transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.ticker-controls::before,
+.ticker-controls::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 0;
+  width: clamp(56px, 8vw, 92px);
+  pointer-events: none;
+  content: "";
+}
+
+.ticker-controls::before {
+  left: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--bg), var(--text) 2%) 0%, color-mix(in srgb, var(--bg), var(--text) 2%) 36%, transparent 100%);
+  box-shadow: 18px 0 24px color-mix(in srgb, var(--bg-deep), transparent 58%);
+}
+
+.ticker-controls::after {
+  right: 0;
+  background: linear-gradient(270deg, color-mix(in srgb, var(--bg), var(--text) 2%) 0%, color-mix(in srgb, var(--bg), var(--text) 2%) 36%, transparent 100%);
+  box-shadow: -18px 0 24px color-mix(in srgb, var(--bg-deep), transparent 58%);
 }
 
 .ticker-control {
@@ -3018,8 +3106,8 @@ h2 {
 }
 
 .ticker-control-prev {
-  color: var(--bg-deep);
-  text-shadow: none;
+  color: var(--accent);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent), transparent 70%);
 }
 
 .ticker-control:hover,
@@ -3032,7 +3120,7 @@ h2 {
 
 .ticker-control-prev:hover,
 .ticker-control-prev:focus-visible {
-  color: color-mix(in srgb, var(--bg-deep), black 18%);
+  color: color-mix(in srgb, var(--accent), white 18%);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -3206,7 +3294,8 @@ h2 {
 
 @media (max-width: 560px) {
   .ticker-controls {
-    inset-inline: 5px;
+    right: 5px;
+    left: calc(76px + 5px);
   }
 
   .ticker-control {
@@ -3265,3 +3354,5 @@ h2 {
     filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent), transparent 88%));
   }
 }
+  position: relative;
+  z-index: 1;
