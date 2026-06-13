@@ -25,8 +25,41 @@ const systemPrefersLight = window.matchMedia("(prefers-color-scheme: light)").ma
 const systemPrefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const systemTheme = systemPrefersLight ? "light" : "dark";
 const themeFromUrl = new URLSearchParams(window.location.search).get("theme");
-const initialTheme = themeFromUrl === "light" || themeFromUrl === "dark" ? themeFromUrl : systemTheme;
+const usesLocalStaticServer = ["localhost", "127.0.0.1", "0.0.0.0", ""].includes(window.location.hostname);
+const getStoredTheme = () => {
+  try {
+    if (getThemeStorageConsent() !== "granted") return null;
+    return window.localStorage?.getItem("appealofai-theme");
+  } catch {
+    return null;
+  }
+};
+const getThemeStorageConsent = () => {
+  try {
+    return window.localStorage?.getItem("appealofai-theme-consent");
+  } catch {
+    return null;
+  }
+};
+const setStoredTheme = (theme) => {
+  try {
+    window.localStorage?.setItem("appealofai-theme-consent", "granted");
+    window.localStorage?.setItem("appealofai-theme", theme);
+  } catch {
+    // Theme still works for the current page when storage is unavailable.
+  }
+};
+const storedTheme = getStoredTheme();
+const initialTheme = themeFromUrl === "light" || themeFromUrl === "dark"
+  ? themeFromUrl
+  : storedTheme === "light" || storedTheme === "dark"
+    ? storedTheme
+    : systemTheme;
 root.dataset.theme = initialTheme;
+
+document.addEventListener("gesturestart", (event) => {
+  event.preventDefault();
+}, { passive: false });
 
 if ("scrollRestoration" in window.history) {
   window.history.scrollRestoration = "manual";
@@ -39,7 +72,7 @@ const resetInitialScroll = () => {
 
 const getCleanDisplayUrl = (href) => {
   const url = new URL(href, window.location.href);
-  if (url.protocol === "file:") return url.href;
+  if (url.protocol === "file:" || usesLocalStaticServer) return url.href;
 
   url.pathname = url.pathname
     .replace(/\/index\.html$/i, "/")
@@ -65,6 +98,36 @@ const updateThemeButton = () => {
   themeToggle.setAttribute("aria-label", isLight ? "Toggle dark mode" : "Toggle light mode");
 };
 
+const showThemeStoragePrompt = () => {
+  if (getThemeStorageConsent() === "granted") {
+    setStoredTheme(root.dataset.theme);
+    return;
+  }
+  if (document.querySelector("[data-theme-storage-prompt]")) return;
+
+  const prompt = document.createElement("div");
+  prompt.className = "theme-storage-prompt";
+  prompt.setAttribute("data-theme-storage-prompt", "");
+  prompt.setAttribute("role", "dialog");
+  prompt.setAttribute("aria-live", "polite");
+  prompt.innerHTML = `
+    <p>Save this theme choice on this device?</p>
+    <div>
+      <button type="button" data-theme-save>Save</button>
+      <button type="button" data-theme-once>Only now</button>
+    </div>
+  `;
+  document.body.append(prompt);
+
+  prompt.querySelector("[data-theme-save]")?.addEventListener("click", () => {
+    setStoredTheme(root.dataset.theme);
+    prompt.remove();
+  });
+  prompt.querySelector("[data-theme-once]")?.addEventListener("click", () => {
+    prompt.remove();
+  });
+};
+
 cleanInitialUrl();
 updateThemeButton();
 resetInitialScroll();
@@ -76,8 +139,10 @@ const wireArticleBackLinks = () => {
   if (!window.location.pathname.includes("/articles/")) return;
   document.querySelectorAll(".page-back a").forEach((link) => {
     link.addEventListener("click", (event) => {
-      event.preventDefault();
-      window.history.back();
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
     });
   });
 };
@@ -203,7 +268,7 @@ const scrollToY = (top) => {
   });
 };
 
-// Carry the active theme across internal pages without cookies or local storage.
+// Carry the active theme across internal pages.
 const getThemeAwareUrl = (href) => {
   const url = new URL(href, window.location.href);
   if (url.origin !== window.location.origin) return null;
@@ -305,7 +370,9 @@ const renderTickerFromArticles = (items = []) => {
   tickerItemCount = tickerItems.length;
   activeTickerIndex = null;
   focusedTickerIndex = null;
-  const repeatedItems = tickerItems.length > 1 ? [...tickerItems, ...tickerItems] : tickerItems;
+  const repeatedItems = tickerItems.length > 1
+    ? [...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems]
+    : tickerItems;
   tickerTrack.replaceChildren(...repeatedItems.map((item, index) => {
     const element = item.url ? document.createElement("a") : document.createElement("span");
     const label = document.createElement("span");
@@ -417,13 +484,16 @@ const setupTickerMotion = () => {
   let tickerAutoTime = 0;
   let tickerPointerInside = false;
   let tickerPointerDown = false;
+  let tickerAutoResumeAt = 0;
+  let tickerLastScrollLeft = tickerTrack.scrollLeft;
+  let tickerLastMovementAt = performance.now();
   const clearCarouselTimers = () => {
     carouselPanTimers.forEach((timer) => window.clearTimeout(timer));
     carouselPanTimers = [];
   };
   const getCarouselTickerItems = () => Array.from(tickerTrack.querySelectorAll("[data-ticker-index]"));
   const getLoopDistance = () => {
-    return tickerItemCount > 1 ? tickerTrack.scrollWidth / 2 : Math.max(0, tickerTrack.scrollWidth - tickerTrack.clientWidth);
+    return tickerItemCount > 1 ? tickerTrack.scrollWidth / 4 : Math.max(0, tickerTrack.scrollWidth - tickerTrack.clientWidth);
   };
   const normalizeTickerScroll = () => {
     const loopDistance = getLoopDistance();
@@ -522,12 +592,16 @@ const setupTickerMotion = () => {
     focusedTickerIndex = null;
     newsStrip?.classList.remove("is-reading");
     updateTickerSelection();
+    tickerAutoResumeAt = performance.now() + 1250;
   };
-  const scheduleTickerRelease = (delay = 4800) => {
+  const holdTickerAutoFlow = (delay = 2200) => {
+    tickerAutoResumeAt = Math.max(tickerAutoResumeAt, performance.now() + delay);
+  };
+  const scheduleTickerRelease = (delay = 6200) => {
     window.clearTimeout(carouselResumeTimer);
     carouselResumeTimer = window.setTimeout(() => {
       if (tickerPointerInside || tickerPointerDown) {
-        scheduleTickerRelease(6200);
+        scheduleTickerRelease(7600);
         return;
       }
       clearTickerFocus();
@@ -554,17 +628,26 @@ const setupTickerMotion = () => {
     updateTickerSelection();
     scrollTickerItemToStart(activeItem, systemPrefersReducedMotion.matches ? "auto" : "smooth");
     gentlyPanLongTickerItem(activeItem);
-    scheduleTickerRelease(tickerPointerInside || tickerPointerDown ? 8200 : 5200);
+    holdTickerAutoFlow(tickerPointerInside || tickerPointerDown ? 8200 : 5600);
+    scheduleTickerRelease(tickerPointerInside || tickerPointerDown ? 8200 : 5600);
   };
   const runTickerAutoFlow = (time) => {
     if (!tickerAutoTime) tickerAutoTime = time;
     const delta = Math.min(64, time - tickerAutoTime);
     tickerAutoTime = time;
 
-    if (activeTickerIndex === null && !tickerPointerDown) {
+    if (activeTickerIndex === null && !tickerPointerDown && time >= tickerAutoResumeAt) {
       const maxScroll = Math.max(0, tickerTrack.scrollWidth - tickerTrack.clientWidth);
       if (maxScroll > 1) {
-        tickerTrack.scrollLeft += delta * 0.026;
+        tickerTrack.scrollLeft += delta * (systemPrefersReducedMotion.matches ? 0.018 : 0.055);
+        if (Math.abs(tickerTrack.scrollLeft - tickerLastScrollLeft) > 0.2) {
+          tickerLastMovementAt = time;
+          tickerLastScrollLeft = tickerTrack.scrollLeft;
+        } else if (time - tickerLastMovementAt > 1800) {
+          tickerTrack.scrollLeft += 1;
+          tickerLastMovementAt = time;
+          tickerLastScrollLeft = tickerTrack.scrollLeft;
+        }
         const loopDistance = getLoopDistance();
         if (loopDistance > 1 && tickerTrack.scrollLeft >= loopDistance) {
           tickerTrack.scrollLeft -= loopDistance;
@@ -579,23 +662,33 @@ const setupTickerMotion = () => {
   tickerNext?.addEventListener("click", () => focusReadableTickerItem(1));
   newsStrip?.addEventListener("pointerenter", () => {
     tickerPointerInside = true;
-    if (activeTickerIndex !== null) scheduleTickerRelease(8200);
+    if (activeTickerIndex !== null) scheduleTickerRelease(9600);
   });
   newsStrip?.addEventListener("pointerleave", () => {
     tickerPointerInside = false;
-    if (activeTickerIndex !== null) scheduleTickerRelease(3600);
+    if (activeTickerIndex !== null) scheduleTickerRelease(5200);
   });
   newsStrip?.addEventListener("pointerdown", () => {
     tickerPointerDown = true;
-    if (activeTickerIndex !== null) scheduleTickerRelease(9000);
+    holdTickerAutoFlow(3600);
+    if (activeTickerIndex !== null) scheduleTickerRelease(10400);
   });
   ["pointerup", "pointercancel"].forEach((eventName) => {
     newsStrip?.addEventListener(eventName, () => {
       tickerPointerDown = false;
-      if (activeTickerIndex !== null) scheduleTickerRelease(tickerPointerInside ? 8200 : 3600);
+      holdTickerAutoFlow(2800);
+      if (activeTickerIndex !== null) scheduleTickerRelease(tickerPointerInside ? 9600 : 5200);
     });
   });
-  if (!systemPrefersReducedMotion.matches && !tickerAutoFrame) {
+  ["pointermove", "touchmove", "wheel"].forEach((eventName) => {
+    newsStrip?.addEventListener(eventName, () => {
+      if (eventName !== "pointermove" || tickerPointerDown) {
+        holdTickerAutoFlow(tickerPointerDown ? 3600 : 1800);
+      }
+      if (activeTickerIndex !== null) scheduleTickerRelease(tickerPointerInside || tickerPointerDown ? 9600 : 5200);
+    }, { passive: true });
+  });
+  if (!tickerAutoFrame) {
     tickerAutoFrame = window.requestAnimationFrame(runTickerAutoFlow);
   }
 };
@@ -637,6 +730,50 @@ if (archiveItems.length) {
   });
 
   updateArchive();
+}
+
+const archiveFilterList = document.querySelector(".archive-filter-list");
+if (archiveFilterList) {
+  const archiveFilterShell = document.createElement("div");
+  archiveFilterShell.className = "archive-filter-shell";
+  archiveFilterList.before(archiveFilterShell);
+  archiveFilterShell.append(archiveFilterList);
+
+  const filterPrev = document.createElement("button");
+  const filterNext = document.createElement("button");
+  filterPrev.className = "archive-filter-control archive-filter-control-prev";
+  filterNext.className = "archive-filter-control archive-filter-control-next";
+  filterPrev.type = "button";
+  filterNext.type = "button";
+  filterPrev.setAttribute("aria-label", "Previous topics");
+  filterNext.setAttribute("aria-label", "More topics");
+  filterPrev.textContent = "\u2039";
+  filterNext.textContent = "\u203a";
+  archiveFilterShell.append(filterPrev, filterNext);
+
+  const updateArchiveFilterControls = () => {
+    const hasOverflow = archiveFilterList.scrollWidth > archiveFilterList.clientWidth + 2;
+    const hasMoreLeft = archiveFilterList.scrollLeft > 2;
+    const hasMoreRight = archiveFilterList.scrollLeft + archiveFilterList.clientWidth < archiveFilterList.scrollWidth - 2;
+    archiveFilterShell.classList.toggle("has-overflow", hasOverflow);
+    archiveFilterShell.classList.toggle("has-more-left", hasOverflow && hasMoreLeft);
+    archiveFilterShell.classList.toggle("has-more-right", hasOverflow && hasMoreRight);
+    filterPrev.disabled = !hasMoreLeft;
+    filterNext.disabled = !hasMoreRight;
+  };
+
+  const moveArchiveFilters = (direction) => {
+    archiveFilterList.scrollBy({
+      left: direction * Math.max(140, archiveFilterList.clientWidth * 0.55),
+      behavior: systemPrefersReducedMotion.matches ? "auto" : "smooth",
+    });
+  };
+
+  filterPrev.addEventListener("click", () => moveArchiveFilters(-1));
+  filterNext.addEventListener("click", () => moveArchiveFilters(1));
+  archiveFilterList.addEventListener("scroll", updateArchiveFilterControls, { passive: true });
+  window.addEventListener("resize", updateArchiveFilterControls);
+  window.requestAnimationFrame(updateArchiveFilterControls);
 }
 
 // Keep the header stack visually stable; only scroll progress changes.
@@ -743,6 +880,7 @@ if (themeToggle) {
   themeToggle.addEventListener("click", () => {
     root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
     updateThemeButton();
+    showThemeStoragePrompt();
   });
 }
 
@@ -814,6 +952,47 @@ if (issueLinks.length || issueSections.length) {
   updateActiveSection();
   window.addEventListener("scroll", updateActiveSection, { passive: true });
   window.addEventListener("resize", updateActiveSection);
+}
+
+const articleToc = document.querySelector(".article-toc");
+if (articleToc) {
+  const tocLinks = Array.from(articleToc.querySelectorAll('a[href^="#"]'));
+  const tocTargets = tocLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+
+  const setActiveTocLink = (targetId) => {
+    tocLinks.forEach((link) => {
+      if (link.getAttribute("href") === `#${targetId}`) {
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  const updateActiveToc = () => {
+    if (!tocTargets.length) return;
+    const marker = window.scrollY + getHeaderOffset() + articleToc.offsetHeight + 28;
+    const activeTarget = tocTargets.reduce((current, target) => {
+      return getDocumentTop(target) <= marker ? target : current;
+    }, tocTargets[0]);
+    if (activeTarget?.id) setActiveTocLink(activeTarget.id);
+  };
+
+  tocLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const target = document.querySelector(link.getAttribute("href"));
+      if (!target) return;
+      event.preventDefault();
+      scrollToY(getDocumentTop(target) - getHeaderOffset() - articleToc.offsetHeight - 14);
+      setActiveTocLink(target.id);
+    });
+  });
+
+  updateActiveToc();
+  window.addEventListener("scroll", updateActiveToc, { passive: true });
+  window.addEventListener("resize", updateActiveToc);
 }
 
 // Floating reader controls for section-level movement.
