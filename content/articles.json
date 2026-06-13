@@ -1,15 +1,33 @@
 {
-  "updated": "2026-06-12T12:00:00Z",
+  "updated": "2026-06-13T12:00:00Z",
   "items": [
+    {
+      "id": "ai-compute-bill-public-upside",
+      "status": "published",
+      "type": "opinion",
+      "date": "2026-06-13",
+      "updated": "2026-06-13T12:00:00Z",
+      "title": "The AI bill is becoming the public test.",
+      "tickerTitle": "The AI bill is becoming the public test",
+      "summary": "A personal opinion on token costs, data centers, space compute, humanoid robots and why the appeal of AI now depends on visible public upside.",
+      "url": "articles/ai-compute-bill-public-upside.html",
+      "topics": [
+        "infrastructure",
+        "policy",
+        "robots",
+        "tools"
+      ],
+      "xPost": "The AI bill is now part of the product story: token costs, data centers, robots, grid stress, job-shock warnings. The appeal survives only if the upside becomes visible enough to justify the cost."
+    },
     {
       "id": "the-appeal-of-ai",
       "status": "published",
       "type": "opinion",
       "date": "2026-06-12",
       "updated": "2026-06-12T12:00:00Z",
-      "title": "The appeal of AI is agency, not magic.",
-      "tickerTitle": "The appeal of AI is agency, not magic",
-      "summary": "A personal launch note for Appeal of AI: the positive case for useful machine intelligence without pretending the hard parts are small.",
+      "title": "The appeal of AI, without the sales pitch.",
+      "tickerTitle": "The appeal of AI, without the sales pitch",
+      "summary": "A personal launch note for Appeal of AI: the case for useful machine intelligence with the costs, mess and public bargain kept in view.",
       "url": "articles/the-appeal-of-ai.html",
       "topics": [
         "culture",
@@ -69,7 +87,7 @@
         "https://darioamodei.com/the-adolescence-of-technology",
         "https://www.anthropic.com/news"
       ],
-      "xPost": "The useful part of Anthropic's adolescence frame is not the drama. It is the admission that AI is powerful, immature and already changing the room. That is exactly the phase where confidence is easy and judgment matters."
+      "xPost": "Anthropic's adolescence frame works because it admits AI is powerful, immature and already changing the room. Confidence comes easily in that phase. Judgment matters more."
     },
     {
       "id": "ai-slop-social-text-fatigue",
@@ -124,7 +142,7 @@
       "sources": [
         "https://timesofindia.indiatimes.com/technology/tech-news/chatgpt-gives-lionel-messi-argentina-makeover-how-fans-can-get-the-same-look/articleshow/131639463.cms"
       ],
-      "xPost": "If Messi x OpenAI is the first global football season of the AI era, the interesting part is not the haircut. It is fan identity becoming editable media: colors, loyalty, image prompts, and culture as a shared generative surface."
+      "xPost": "If Messi x OpenAI is the first global football season of the AI era, the real story is fan identity turning into editable media: colors, loyalty, image prompts, and culture as a shared generative surface."
     },
     {
       "id": "apple-intelligence-naming-trap",
@@ -164,7 +182,7 @@
         "https://www.businessinsider.com/elon-musk-ai-data-centers-spacex-will-send-into-space-2026-6",
         "https://arxiv.org/abs/2604.27197"
       ],
-      "xPost": "AI data centers in space sound ridiculous in the exact way infrastructure shifts often sound ridiculous before they become spreadsheets. The appeal is not the spectacle. It is the visible hunger for compute."
+      "xPost": "AI data centers in space sound ridiculous in the exact way infrastructure shifts often sound ridiculous before they become spreadsheets. The real signal is the visible hunger for compute."
     },
     {
       "id": "ai-infrastructure-not-bubble",

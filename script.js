@@ -11,6 +11,7 @@ const tickerTrack = document.querySelector(".ticker-track");
 let tickerPrev = null;
 let tickerNext = null;
 let activeTickerIndex = null;
+let focusedTickerIndex = null;
 let tickerItemCount = 0;
 const issueStrip = document.querySelector(".issue-strip");
 const archiveSearch = document.querySelector("[data-archive-search]");
@@ -26,6 +27,15 @@ const systemTheme = systemPrefersLight ? "light" : "dark";
 const themeFromUrl = new URLSearchParams(window.location.search).get("theme");
 const initialTheme = themeFromUrl === "light" || themeFromUrl === "dark" ? themeFromUrl : systemTheme;
 root.dataset.theme = initialTheme;
+
+if ("scrollRestoration" in window.history) {
+  window.history.scrollRestoration = "manual";
+}
+
+const resetInitialScroll = () => {
+  if (window.location.hash) return;
+  window.scrollTo(0, 0);
+};
 
 const getCleanDisplayUrl = (href) => {
   const url = new URL(href, window.location.href);
@@ -57,14 +67,29 @@ const updateThemeButton = () => {
 
 cleanInitialUrl();
 updateThemeButton();
+resetInitialScroll();
+window.addEventListener("load", () => {
+  window.requestAnimationFrame(resetInitialScroll);
+}, { once: true });
 
 // Remove broken optional assets instead of showing empty image frames.
 document.querySelectorAll("[data-fallback-remove]").forEach((image) => {
   image.addEventListener("error", () => image.remove(), { once: true });
 });
 
+const updateIssueStripWrap = () => {
+  if (!issueStrip) return;
+  const visibleItems = Array.from(issueStrip.children).filter((item) => {
+    return window.getComputedStyle(item).display !== "none";
+  });
+  const firstTop = visibleItems[0]?.offsetTop ?? 0;
+  const isWrapped = visibleItems.some((item) => Math.abs(item.offsetTop - firstTop) > 2);
+  issueStrip.classList.toggle("is-wrapped", isWrapped);
+};
+
 // Keep sticky offsets in CSS so anchor scrolling lands below the header stack.
 const getHeaderOffset = () => {
+  updateIssueStripWrap();
   const height = header?.offsetHeight || 72;
   const newsbarHeight = newsStrip?.offsetHeight || 0;
   const issueStripHeight = issueStrip?.scrollHeight || 0;
@@ -76,12 +101,17 @@ const getHeaderOffset = () => {
 
 if ("ResizeObserver" in window) {
   const stickyMetricObserver = new ResizeObserver(() => {
-    window.requestAnimationFrame(getHeaderOffset);
+    window.requestAnimationFrame(() => {
+      updateIssueStripWrap();
+      getHeaderOffset();
+    });
   });
   [header, newsStrip, issueStrip].filter(Boolean).forEach((element) => {
     stickyMetricObserver.observe(element);
   });
 }
+
+window.addEventListener("load", updateIssueStripWrap, { once: true });
 
 const getDocumentTop = (element) => {
   return element.getBoundingClientRect().top + window.scrollY;
@@ -202,6 +232,7 @@ const renderTickerFromArticles = (items = []) => {
   const repeatedItems = [...tickerItems, ...tickerItems];
   tickerItemCount = tickerItems.length;
   activeTickerIndex = null;
+  focusedTickerIndex = null;
   tickerTrack.replaceChildren(...repeatedItems.map((item, index) => {
     const element = item.url ? document.createElement("a") : document.createElement("span");
     const label = document.createElement("span");
@@ -281,12 +312,21 @@ const updateTickerSelection = () => {
   items.forEach((item) => {
     const isActive = activeTickerIndex !== null && Number(item.dataset.tickerIndex) === activeTickerIndex;
     item.classList.toggle("is-active", isActive);
+    item.classList.remove("is-before-active");
     if (isActive) {
       item.setAttribute("aria-current", "true");
     } else {
       item.removeAttribute("aria-current");
     }
   });
+
+  if (activeTickerIndex !== null) {
+    items.forEach((item, index) => {
+      if (Number(item.dataset.tickerIndex) !== activeTickerIndex) return;
+      const previous = items[index - 1];
+      if (previous) previous.classList.add("is-before-active");
+    });
+  }
 };
 
 const setupTickerMotion = () => {
@@ -299,6 +339,18 @@ const setupTickerMotion = () => {
   let currentRate = 1;
   let targetRate = 1;
   let resumeTimer = 0;
+  let tickerFocusFrame = 0;
+  let panTimers = [];
+
+  const clearPanTimers = () => {
+    panTimers.forEach((timer) => window.clearTimeout(timer));
+    panTimers = [];
+  };
+  const cancelTickerFocus = () => {
+    if (!tickerFocusFrame) return;
+    window.cancelAnimationFrame(tickerFocusFrame);
+    tickerFocusFrame = 0;
+  };
 
   const step = () => {
     currentRate += (targetRate - currentRate) * 0.12;
@@ -329,7 +381,8 @@ const setupTickerMotion = () => {
     tickerTrack.getAnimations().forEach((animation) => animation.play());
     restoreTicker();
   };
-  const animateTickerToTime = (animation, targetTime, duration) => {
+  const animateTickerToTime = (animation, targetTime, duration, animationMs = 460) => {
+    cancelTickerFocus();
     const startTime = Number(animation.currentTime) || 0;
     let endTime = targetTime;
     const halfDuration = duration / 2;
@@ -343,97 +396,171 @@ const setupTickerMotion = () => {
     pauseTicker();
 
     const tick = (now) => {
-      const progress = Math.min(1, (now - startedAt) / 460);
+      const progress = Math.min(1, (now - startedAt) / animationMs);
       const eased = ease(progress);
       animation.currentTime = ((startTime + (endTime - startTime) * eased) % duration + duration) % duration;
 
       if (progress < 1) {
-        window.requestAnimationFrame(tick);
+        tickerFocusFrame = window.requestAnimationFrame(tick);
       } else {
+        tickerFocusFrame = 0;
         pauseTicker();
       }
     };
 
-    window.requestAnimationFrame(tick);
+    tickerFocusFrame = window.requestAnimationFrame(tick);
   };
   const getTickerReadingBounds = () => {
     const stripRect = newsStrip.getBoundingClientRect();
     const labelWidth = newsLabel?.getBoundingClientRect().width || 92;
     const edgeWidth = Number.parseFloat(getComputedStyle(newsStrip).getPropertyValue("--ticker-edge-width")) || 56;
-    const inset = edgeWidth + 8;
+    const leftControlRight = tickerPrev?.getBoundingClientRect().right;
+    const rightControlLeft = tickerNext?.getBoundingClientRect().left;
+    const left = Number.isFinite(leftControlRight) ? leftControlRight + 12 : stripRect.left + labelWidth + edgeWidth + 12;
+    let right = Number.isFinite(rightControlLeft) ? rightControlLeft - 12 : stripRect.right - edgeWidth - 12;
+    if (right <= left + 80) {
+      right = stripRect.right - 12;
+    }
     return {
-      left: stripRect.left + labelWidth + inset,
-      right: stripRect.right - inset,
-      width: Math.max(120, stripRect.width - labelWidth - inset * 2),
+      left,
+      right,
+      width: Math.max(120, right - left),
     };
   };
-  const getUniqueTickerItems = () => {
-    const seen = new Set();
-    return Array.from(tickerTrack.querySelectorAll("[data-ticker-index]")).filter((item) => {
-      const index = item.dataset.tickerIndex;
-      if (seen.has(index)) return false;
-      seen.add(index);
-      return true;
-    });
-  };
   const getTickerItems = () => Array.from(tickerTrack.querySelectorAll("[data-ticker-index]"));
-  const getMostVisibleTickerIndex = () => {
+  const getMostVisibleTickerItem = () => {
     const bounds = getTickerReadingBounds();
     const winner = getTickerItems().reduce((best, item) => {
       const rect = item.getBoundingClientRect();
       const visible = Math.max(0, Math.min(rect.right, bounds.right) - Math.max(rect.left, bounds.left));
-      return visible > best.visible ? { visible, index: Number(item.dataset.tickerIndex) } : best;
-    }, { visible: 0, index: 0 });
+      return visible > best.visible ? { visible, item } : best;
+    }, { visible: 0, item: null });
 
-    return Number.isFinite(winner.index) ? winner.index : 0;
+    return winner.item || getTickerItems()[0] || null;
   };
-  const getBestActiveTickerItem = (index, targetCenter, travelDistance, duration, tickerAnimation) => {
-    if (!travelDistance || !duration) return null;
-    const currentTime = Number(tickerAnimation.currentTime) || 0;
-    return getTickerItems()
-      .filter((item) => Number(item.dataset.tickerIndex) === index)
-      .map((item) => {
-        const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-        const desiredTranslate = targetCenter - tickerTrack.offsetLeft - itemCenter;
-        const progress = ((-desiredTranslate / travelDistance) % 1 + 1) % 1;
-        const targetTime = progress * duration;
-        const delta = Math.abs(((targetTime - currentTime + duration / 2) % duration) - duration / 2);
-        return { item, targetTime, delta };
-      })
-      .sort((a, b) => a.delta - b.delta)[0];
+  const getTickerTargetTime = (item, align, duration, travelDistance) => {
+    const bounds = getTickerReadingBounds();
+    const stripRect = newsStrip.getBoundingClientRect();
+    const text = item.querySelector(".ticker-text") || item;
+    const itemWidth = text.getBoundingClientRect().width;
+    const itemLeft = item.offsetLeft + text.offsetLeft;
+    const itemCenter = itemLeft + itemWidth / 2;
+    let targetPoint = (bounds.left + bounds.right) / 2 - stripRect.left;
+    let itemPoint = itemCenter;
+
+    if (align === "left") {
+      targetPoint = bounds.left - stripRect.left;
+      itemPoint = itemLeft;
+    } else if (align === "right") {
+      targetPoint = bounds.right - stripRect.left;
+      itemPoint = itemLeft + item.offsetWidth;
+    } else if (itemWidth > bounds.width) {
+      targetPoint = bounds.left - stripRect.left;
+      itemPoint = itemLeft;
+    }
+
+    const desiredTranslate = targetPoint - tickerTrack.offsetLeft - itemPoint;
+    const progress = travelDistance ? ((-desiredTranslate / travelDistance) % 1 + 1) % 1 : 0;
+    return progress * duration;
+  };
+  const getTickerMove = (item, align, duration, travelDistance, currentTime, direction) => {
+    const targetTime = getTickerTargetTime(item, align, duration, travelDistance);
+    const forward = ((targetTime - currentTime) % duration + duration) % duration;
+    const backward = ((currentTime - targetTime) % duration + duration) % duration;
+    const delta = direction > 0 ? forward : backward;
+    return { item, targetTime, delta };
+  };
+  const getTickerTransformX = () => {
+    const transform = window.getComputedStyle(tickerTrack).transform;
+    if (!transform || transform === "none") return 0;
+    try {
+      return new DOMMatrixReadOnly(transform).m41;
+    } catch {
+      const match = transform.match(/matrix\(([^)]+)\)/);
+      return match ? Number.parseFloat(match[1].split(",")[4]) || 0 : 0;
+    }
+  };
+  const getTickerTranslateForItem = (item, align = "left") => {
+    const bounds = getTickerReadingBounds();
+    const stripRect = newsStrip.getBoundingClientRect();
+    const text = item.querySelector(".ticker-text") || item;
+    const itemWidth = text.getBoundingClientRect().width;
+    const itemLeft = item.offsetLeft + text.offsetLeft;
+    const point = align === "right" ? itemLeft + itemWidth : itemLeft;
+    const target = align === "right" ? bounds.right - stripRect.left : bounds.left - stripRect.left;
+    return target - tickerTrack.offsetLeft - point;
+  };
+  const settleTickerAtItem = (item, align = "left", durationMs = 520) => {
+    if (!item) return;
+    const currentTranslate = getTickerTransformX();
+    const targetTranslate = getTickerTranslateForItem(item, align);
+    tickerTrack.getAnimations().forEach((animation) => animation.cancel());
+    tickerTrack.style.animation = "none";
+    tickerTrack.style.transition = "none";
+    tickerTrack.style.transform = `translateX(${currentTranslate}px)`;
+    tickerTrack.offsetHeight;
+    tickerTrack.style.transition = `transform ${durationMs}ms cubic-bezier(0.2, 0.8, 0.2, 1)`;
+    tickerTrack.style.transform = `translateX(${targetTranslate}px)`;
+  };
+  const releaseTickerControl = () => {
+    tickerTrack.style.transition = "";
+    tickerTrack.style.transform = "";
+    tickerTrack.style.animation = "";
+    restoreTicker();
   };
   const nudgeTicker = (direction) => {
     window.clearTimeout(resumeTimer);
-    const items = getUniqueTickerItems();
-    const itemCount = tickerItemCount || items.length || 1;
-    const currentIndex = activeTickerIndex ?? getMostVisibleTickerIndex();
-    activeTickerIndex = activeTickerIndex === null
-      ? (currentIndex + direction + itemCount) % itemCount
-      : (activeTickerIndex + direction + itemCount) % itemCount;
-    updateTickerSelection();
-    const animations = tickerTrack.getAnimations();
-    const tickerAnimation = animations[0];
-    let activeItem = items.find((item) => Number(item.dataset.tickerIndex) === activeTickerIndex)
-      || tickerTrack.querySelector(`[data-ticker-index="${activeTickerIndex}"]`);
+    clearPanTimers();
+    cancelTickerFocus();
+    const allItems = getTickerItems();
+    const sourceItem = getMostVisibleTickerItem();
+    const itemCount = tickerItemCount || Math.max(1, new Set(allItems.map((item) => item.dataset.tickerIndex)).size);
+    const sourceIndex = focusedTickerIndex ?? (Number(sourceItem?.dataset.tickerIndex) || 0);
+    const targetIndex = (sourceIndex + direction + itemCount) % itemCount;
+    let activeItem = allItems.find((item) => Number(item.dataset.tickerIndex) === targetIndex) || sourceItem;
+    const currentTranslate = getTickerTransformX();
+    const candidates = allItems.filter((item) => Number(item.dataset.tickerIndex) === targetIndex);
+    const candidateMoves = candidates.map((item) => {
+      const targetTranslate = getTickerTranslateForItem(item, "left");
+      const directionalDelta = direction > 0 ? currentTranslate - targetTranslate : targetTranslate - currentTranslate;
+      return { item, targetTranslate, directionalDelta };
+    });
+    const directionalMove = candidateMoves
+      .filter((move) => move.directionalDelta > 2)
+      .sort((a, b) => a.directionalDelta - b.directionalDelta)[0];
+    const nearestMove = candidateMoves
+      .sort((a, b) => Math.abs(a.targetTranslate - currentTranslate) - Math.abs(b.targetTranslate - currentTranslate))[0];
 
-    if (tickerAnimation && activeItem && !systemPrefersReducedMotion.matches) {
-      const timing = tickerAnimation.effect?.getTiming();
-      const duration = Number(timing?.duration) || 38000;
-      const travelDistance = tickerTrack.scrollWidth / 2;
-      const bounds = getTickerReadingBounds();
-      const stripRect = newsStrip.getBoundingClientRect();
-      const itemWidth = activeItem.getBoundingClientRect().width;
-      const targetCenter = itemWidth > bounds.width
-        ? bounds.left - stripRect.left + itemWidth / 2
-        : (bounds.left + bounds.right) / 2 - stripRect.left;
-      const bestItem = getBestActiveTickerItem(activeTickerIndex, targetCenter, travelDistance, duration, tickerAnimation);
-      activeItem = bestItem?.item || activeItem;
-      animateTickerToTime(tickerAnimation, bestItem?.targetTime ?? 0, duration);
-    } else {
-      activeItem?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    activeItem = (directionalMove || nearestMove)?.item || activeItem;
+    activeTickerIndex = Number(activeItem?.dataset.tickerIndex) || 0;
+    focusedTickerIndex = activeTickerIndex;
+    updateTickerSelection();
+
+    if (activeItem && !systemPrefersReducedMotion.matches) {
+      const text = activeItem.querySelector(".ticker-text") || activeItem;
+      const isLongTitle = text.getBoundingClientRect().width > getTickerReadingBounds().width;
+      settleTickerAtItem(activeItem, "left");
+
+      if (isLongTitle) {
+        panTimers.push(window.setTimeout(() => {
+          settleTickerAtItem(activeItem, "right", 3200);
+        }, 900));
+        panTimers.push(window.setTimeout(() => {
+          settleTickerAtItem(activeItem, "left", 2400);
+        }, 4700));
+      }
+    } else if (activeItem) {
+      activeItem.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
     }
 
-    resumeTimer = window.setTimeout(resumeTicker, 4200);
+    resumeTimer = window.setTimeout(() => {
+      clearPanTimers();
+      cancelTickerFocus();
+      activeTickerIndex = null;
+      focusedTickerIndex = null;
+      updateTickerSelection();
+      releaseTickerControl();
+    }, activeItem?.getBoundingClientRect().width > getTickerReadingBounds().width ? 7200 : 4200);
   };
 
   if (!systemPrefersReducedMotion.matches) {
