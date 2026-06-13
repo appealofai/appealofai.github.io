@@ -11,5 +11,4 @@ With expertise, the same workflow becomes leverage. It speeds up drafts,
 branches, refactors and exploration. The human still needs taste, review and
 technical judgment.
 
-The appeal is not that AI replaces craft. It is that craft suddenly has a much
-faster instrument.
+The appeal is simple: craft suddenly has a much faster instrument.

@@ -1,6 +1,33 @@
 {
-  "updated": "2026-06-13T12:00:00Z",
+  "updated": "2026-06-13T18:00:00Z",
   "items": [
+    {
+      "id": "ai-upside-ledger",
+      "status": "published",
+      "type": "opinion",
+      "date": "2026-06-13",
+      "updated": "2026-06-13T18:00:00Z",
+      "title": "The AI upside needs a ledger now.",
+      "tickerTitle": "The AI upside needs a ledger now",
+      "summary": "A personal opinion on AI infrastructure, jobs, robots and why the appeal of AI now depends on a visible public ledger of costs and gains.",
+      "url": "articles/ai-upside-ledger.html",
+      "image": "assets/img/social-card.png",
+      "topics": [
+        "infrastructure",
+        "policy",
+        "robots",
+        "jobs"
+      ],
+      "tags": ["infrastructure", "jobs", "robots", "public-upside"],
+      "sources": [
+        "https://www.iea.org/reports/energy-and-ai",
+        "https://www.anthropic.com/economic-index",
+        "https://www.businessinsider.com/anthropic-ceo-dario-amodei-ai-related-job-displacement-policy-plan-2026-6",
+        "https://about.fb.com/news/",
+        "https://www.figure.ai/news/helix"
+      ],
+      "xPost": "The appeal of AI now needs a public ledger: power, jobs, data centers, robots, safety, access, and who actually gets the upside. The technology can still be worth it. The bill has to be visible."
+    },
     {
       "id": "ai-compute-bill-public-upside",
       "status": "published",
@@ -25,9 +52,9 @@
       "type": "opinion",
       "date": "2026-06-12",
       "updated": "2026-06-12T12:00:00Z",
-      "title": "The appeal of AI, without the sales pitch.",
-      "tickerTitle": "The appeal of AI, without the sales pitch",
-      "summary": "A personal launch note for Appeal of AI: the case for useful machine intelligence with the costs, mess and public bargain kept in view.",
+      "title": "The appeal of AI, with the hard parts still in view.",
+      "tickerTitle": "The appeal of AI, with the hard parts still in view",
+      "summary": "A personal launch note for Appeal of AI: useful machine intelligence, public upside and the costs that cannot be waved away.",
       "url": "articles/the-appeal-of-ai.html",
       "topics": [
         "culture",
@@ -126,23 +153,6 @@
         "https://www.theguardian.com/technology/2026/jun/11/xai-sues-engineer-grok-safety-concerns"
       ],
       "xPost": "Grok Build is less interesting as one CLI and more interesting as a signal: coding agents are becoming platform surfaces. The model wants the repo, terminal, plan, diff and review. The safety questions need to sit right next to the excitement."
-    },
-    {
-      "id": "messi-openai-football-campaign",
-      "status": "published",
-      "type": "watch",
-      "date": "2026-06-10",
-      "updated": "2026-06-10T21:36:00Z",
-      "title": "Messi and OpenAI turn fan identity into an image prompt.",
-      "tickerTitle": "Messi and OpenAI turn fan identity into an image prompt",
-      "summary": "A watch note on the reported Messi x OpenAI campaign and why sports identity is an obvious stage for generative images.",
-      "url": "articles/messi-openai-football-campaign.html",
-      "image": "assets/img/social-card.png",
-      "tags": ["openai", "messi", "images", "culture", "sports"],
-      "sources": [
-        "https://timesofindia.indiatimes.com/technology/tech-news/chatgpt-gives-lionel-messi-argentina-makeover-how-fans-can-get-the-same-look/articleshow/131639463.cms"
-      ],
-      "xPost": "If Messi x OpenAI is the first global football season of the AI era, the real story is fan identity turning into editable media: colors, loyalty, image prompts, and culture as a shared generative surface."
     },
     {
       "id": "apple-intelligence-naming-trap",
