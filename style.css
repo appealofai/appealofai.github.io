@@ -2092,13 +2092,24 @@ h2 {
 }
 
 .archive-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
   min-height: calc(100svh - 220px);
   padding-top: clamp(14px, 2.6vw, 28px);
+}
+
+.archive-page > .section {
+  width: min(920px, calc(100% - clamp(30px, 7vw, 104px)));
 }
 
 .archive-hero {
   display: grid;
   gap: clamp(14px, 2.4vw, 22px);
+  width: var(--page-width);
+  max-width: 100%;
+  min-width: 0;
   padding: clamp(22px, 3vw, 34px);
   border: 1px solid color-mix(in srgb, var(--line), transparent 36%);
   border-radius: 18px;
@@ -2125,9 +2136,9 @@ h2 {
 
 .archive-tools {
   display: grid;
-  grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.18fr);
-  gap: clamp(14px, 2.2vw, 22px);
-  align-items: end;
+  grid-template-columns: 1fr;
+  gap: clamp(12px, 2vw, 18px);
+  align-items: start;
   margin-top: 4px;
   min-width: 0;
   max-width: 100%;
@@ -2136,8 +2147,9 @@ h2 {
 .archive-search {
   display: grid;
   gap: 7px;
+  width: min(100%, 520px);
   min-width: 0;
-  max-width: none;
+  max-width: 100%;
   color: var(--quiet);
   font-family: var(--font-sans);
   font-size: 12px;
@@ -2171,76 +2183,28 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 10px;
-  justify-content: end;
+  justify-content: start;
   align-items: center;
+  overflow: visible;
+  padding: 0;
   min-width: 0;
   max-width: 100%;
-}
-
-.archive-filter-shell {
-  position: relative;
-  min-width: 0;
-  max-width: 100%;
-}
-
-.archive-filter-control {
-  position: absolute;
-  top: 50%;
-  z-index: 2;
-  display: none;
-  width: 28px;
-  height: 34px;
-  place-items: center;
-  padding: 0 0 3px;
-  border: 0;
-  background: color-mix(in srgb, var(--surface-soft), transparent 8%);
-  color: var(--accent);
-  font-family: var(--font-sans);
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1;
-  transform: translateY(-50%);
-}
-
-.archive-filter-control-prev {
-  left: 0;
-  box-shadow: 16px 0 18px color-mix(in srgb, var(--bg-deep), transparent 36%);
-}
-
-.archive-filter-control-next {
-  right: 0;
-  box-shadow: -16px 0 18px color-mix(in srgb, var(--bg-deep), transparent 36%);
-}
-
-.archive-filter-shell.has-overflow .archive-filter-list {
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  overflow-x: auto;
-  padding-inline: 34px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.archive-filter-shell.has-overflow .archive-filter-list::-webkit-scrollbar {
-  display: none;
-}
-
-.archive-filter-shell.has-more-left .archive-filter-control-prev,
-.archive-filter-shell.has-more-right .archive-filter-control-next {
-  display: grid;
 }
 
 .archive-filter-list button {
   position: relative;
   flex: 0 1 auto;
+  max-width: 100%;
   min-height: 34px;
   padding: 7px 14px;
+  overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--line), transparent 26%);
   border-radius: 999px;
   background: color-mix(in srgb, var(--surface-soft), transparent 28%);
   color: var(--quiet);
   font: 900 12px/1 var(--font-sans);
   letter-spacing: 0.06em;
+  text-overflow: ellipsis;
   white-space: nowrap;
   text-transform: uppercase;
   transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
@@ -3351,7 +3315,7 @@ h2 {
   }
 
   .archive-search {
-    width: min(100%, 360px);
+    width: min(100%, 520px);
   }
 
   .archive-filter-list {
@@ -3375,7 +3339,7 @@ h2 {
 
 @media (max-width: 560px) {
   :root {
-    --page-width: min(100%, calc(100% - 24px));
+    --page-width: min(100%, calc(100% - 28px));
   }
 
   .site-footer {
@@ -3517,14 +3481,14 @@ h2 {
   .archive-filter-list {
     position: relative;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: flex-start;
     width: 100%;
     max-width: 100%;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    padding: 2px 28px 4px 2px;
-    scrollbar-width: none;
+    overflow: visible;
+    padding: 0;
+    overscroll-behavior-inline: auto;
+    scrollbar-width: auto;
     box-shadow: none;
   }
 

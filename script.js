@@ -732,50 +732,6 @@ if (archiveItems.length) {
   updateArchive();
 }
 
-const archiveFilterList = document.querySelector(".archive-filter-list");
-if (archiveFilterList) {
-  const archiveFilterShell = document.createElement("div");
-  archiveFilterShell.className = "archive-filter-shell";
-  archiveFilterList.before(archiveFilterShell);
-  archiveFilterShell.append(archiveFilterList);
-
-  const filterPrev = document.createElement("button");
-  const filterNext = document.createElement("button");
-  filterPrev.className = "archive-filter-control archive-filter-control-prev";
-  filterNext.className = "archive-filter-control archive-filter-control-next";
-  filterPrev.type = "button";
-  filterNext.type = "button";
-  filterPrev.setAttribute("aria-label", "Previous topics");
-  filterNext.setAttribute("aria-label", "More topics");
-  filterPrev.textContent = "\u2039";
-  filterNext.textContent = "\u203a";
-  archiveFilterShell.append(filterPrev, filterNext);
-
-  const updateArchiveFilterControls = () => {
-    const hasOverflow = archiveFilterList.scrollWidth > archiveFilterList.clientWidth + 2;
-    const hasMoreLeft = archiveFilterList.scrollLeft > 2;
-    const hasMoreRight = archiveFilterList.scrollLeft + archiveFilterList.clientWidth < archiveFilterList.scrollWidth - 2;
-    archiveFilterShell.classList.toggle("has-overflow", hasOverflow);
-    archiveFilterShell.classList.toggle("has-more-left", hasOverflow && hasMoreLeft);
-    archiveFilterShell.classList.toggle("has-more-right", hasOverflow && hasMoreRight);
-    filterPrev.disabled = !hasMoreLeft;
-    filterNext.disabled = !hasMoreRight;
-  };
-
-  const moveArchiveFilters = (direction) => {
-    archiveFilterList.scrollBy({
-      left: direction * Math.max(140, archiveFilterList.clientWidth * 0.55),
-      behavior: systemPrefersReducedMotion.matches ? "auto" : "smooth",
-    });
-  };
-
-  filterPrev.addEventListener("click", () => moveArchiveFilters(-1));
-  filterNext.addEventListener("click", () => moveArchiveFilters(1));
-  archiveFilterList.addEventListener("scroll", updateArchiveFilterControls, { passive: true });
-  window.addEventListener("resize", updateArchiveFilterControls);
-  window.requestAnimationFrame(updateArchiveFilterControls);
-}
-
 // Keep the header stack visually stable; only scroll progress changes.
 if (header) {
   const updateHeader = () => {
