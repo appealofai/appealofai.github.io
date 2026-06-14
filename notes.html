@@ -14,13 +14,13 @@
     <meta property="og:title" content="Notes | appealofai">
     <meta property="og:description" content="Short reports, watchlists and field notes from appealofai.">
     <meta property="og:url" content="https://appealofai.sol.site/notes.html">
-    <meta property="og:image" content="https://appealofai.sol.site/assets/img/social-card.png">
+    <meta property="og:image" content="https://appealofai.sol.site/assets/img/social-card.png?v=2026-06-14">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Notes | appealofai">
     <meta name="twitter:description" content="Short reports, watchlists and field notes from appealofai.">
-    <meta name="twitter:image" content="https://appealofai.sol.site/assets/img/social-card.png">
+    <meta name="twitter:image" content="https://appealofai.sol.site/assets/img/social-card.png?v=2026-06-14">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -45,18 +45,21 @@
 
     <noscript>
       <div class="no-js-banner">
-        JavaScript is off. Reading works normally; theme switching and archive filters are disabled.
+        JavaScript is off. Reading works normally; filters and sorting are hidden, and all notes are shown in editorial order.
       </div>
       <style id="no-js-news-style">
         .newsbar { overflow-x: auto; scrollbar-width: none; }
         .newsbar::-webkit-scrollbar { display: none; }
         .ticker-track { animation: ticker 44s linear infinite; padding-right: 18px; }
+        .archive-tools { display: none; }
+        .archive-static-note { display: block; }
       </style>
     </noscript>
 
-    <div class="newsbar" data-news-strip data-breaking="false" data-last-updated="2026-06-13T12:00:00Z" aria-label="Notes ticker">
+    <div class="newsbar" data-news-strip data-breaking="false" data-last-updated="2026-06-14T08:00:00Z" aria-label="Notes ticker">
       <strong data-news-label>Notes</strong>
       <div class="ticker-track">
+        <a href="articles/fable-5-agi-access-politics.html">A Fable block would be a rehearsal for AGI politics</a>
         <a href="articles/ai-upside-ledger.html">The AI upside needs a ledger now</a>
         <a href="articles/ai-compute-bill-public-upside.html">The AI bill is becoming the public test</a>
         <a href="articles/the-appeal-of-ai.html">The appeal of AI, with the hard parts still in view</a>
@@ -78,35 +81,50 @@
           public taste, agent tools, image culture and the infrastructure
           underneath the AI mood.
         </p>
+        <p class="archive-static-note">All notes are shown in editorial order.</p>
         <div class="archive-tools" aria-label="Article filters">
           <label class="archive-search">
             <span>Find</span>
             <input type="search" data-archive-search placeholder="Search notes, topics...">
           </label>
-          <div class="archive-filter-list" aria-label="Topics">
-            <button type="button" data-archive-filter="all" aria-pressed="true">All</button>
-            <button type="button" data-archive-filter="models" aria-pressed="false">Models</button>
-            <button type="button" data-archive-filter="tools" aria-pressed="false">Tools</button>
-            <button type="button" data-archive-filter="infrastructure" aria-pressed="false">Infrastructure</button>
-            <button type="button" data-archive-filter="culture" aria-pressed="false">Culture</button>
+          <div class="archive-refine-row">
+            <label class="archive-select">
+              <span>Topic</span>
+              <select data-archive-topic aria-label="Filter notes by topic">
+                <option value="all">All topics</option>
+                <option value="models">Models</option>
+                <option value="infrastructure">Infrastructure</option>
+                <option value="policy">Policy</option>
+                <option value="tools">Tools</option>
+                <option value="culture">Culture</option>
+              </select>
+            </label>
+            <label class="archive-select">
+              <span>Order</span>
+              <select data-archive-order aria-label="Sort notes">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+              </select>
+            </label>
           </div>
+          <p class="archive-count" data-archive-count aria-live="polite">Showing all notes.</p>
         </div>
       </section>
 
       <section class="section notes-spotlight" aria-label="Suggested reading">
-        <a class="notes-lead" href="articles/ai-upside-ledger.html">
+        <a class="notes-lead" href="articles/fable-5-agi-access-politics.html">
           <span class="card-visual" aria-hidden="true"></span>
           <span>Start here</span>
-          <h2>The AI upside needs a ledger now.</h2>
+          <h2>A Fable block would be a rehearsal for AGI politics.</h2>
           <p>
-            Power, jobs, data centers and robots now need a visible public
-            account of costs and gains.
+            Strong models are already political. AGI access needs public rules
+            before the emergency.
           </p>
           <span class="card-cta">Read note</span>
         </a>
         <div class="notes-side">
           <a class="notes-mini" href="articles/ai-upside-needs-public-deal.html">
-            <span>Opinion</span>
+            <span>Public upside</span>
             <h3>The AI upside needs a public deal.</h3>
             <p>The appeal gets weaker if the gains feel privately captured.</p>
           </a>
@@ -123,7 +141,15 @@
           <p class="section-label">All notes</p>
           <h2>Browse by curiosity, not chronology.</h2>
         </div>
-        <a class="edition-row" href="articles/ai-upside-ledger.html" data-archive-item data-topics="infrastructure policy robots jobs">
+        <a class="edition-row" href="articles/fable-5-agi-access-politics.html" data-archive-item data-date="2026-06-14" data-topics="models policy public-upside">
+          <span>Opinion &middot; Model Access</span>
+          <div>
+            <h2>A Fable block would be a rehearsal for AGI politics.</h2>
+            <p>If strong models can be blocked now, the real question is who gets access, review and benefit when the stakes rise.</p>
+            <span class="card-cta">Read lead</span>
+          </div>
+        </a>
+        <a class="edition-row" href="articles/ai-upside-ledger.html" data-archive-item data-date="2026-06-13" data-topics="infrastructure policy robots jobs">
           <span>Opinion &middot; Public Upside</span>
           <div>
             <h2>The AI upside needs a ledger now.</h2>
@@ -131,7 +157,7 @@
             <span class="card-cta">Read opinion</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/ai-compute-bill-public-upside.html" data-archive-item data-topics="infrastructure policy robots tools">
+        <a class="edition-row" href="articles/ai-compute-bill-public-upside.html" data-archive-item data-date="2026-06-13" data-topics="infrastructure policy robots tools">
           <span>Opinion &middot; Infrastructure</span>
           <div>
             <h2>The AI bill is becoming the public test.</h2>
@@ -139,7 +165,7 @@
             <span class="card-cta">Read opinion</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/the-appeal-of-ai.html" data-archive-item data-topics="culture policy infrastructure">
+        <a class="edition-row" href="articles/the-appeal-of-ai.html" data-archive-item data-date="2026-06-12" data-topics="culture policy infrastructure">
           <span>Opinion &middot; Launch note</span>
           <div>
             <h2>The appeal of AI, with the hard parts still in view.</h2>
@@ -147,7 +173,7 @@
             <span class="card-cta">Read note</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/first-signal.html" data-archive-item data-topics="models culture">
+        <a class="edition-row" href="articles/first-signal.html" data-archive-item data-date="2026-06-11" data-topics="models culture">
           <span>Opinion &middot; Claude</span>
           <div>
             <h2>Claude Fable 5 makes the model release feel like a governance story.</h2>
@@ -155,7 +181,7 @@
             <span class="card-cta">Read lead</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/ai-upside-needs-public-deal.html" data-archive-item data-topics="culture policy">
+        <a class="edition-row" href="articles/ai-upside-needs-public-deal.html" data-archive-item data-date="2026-06-11" data-topics="culture policy">
           <span>Opinion &middot; Public Upside</span>
           <div>
             <h2>The AI upside needs a public deal.</h2>
@@ -163,7 +189,7 @@
             <span class="card-cta">Read opinion</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/ai-slop-social-text-fatigue.html" data-archive-item data-topics="culture">
+        <a class="edition-row" href="articles/ai-slop-social-text-fatigue.html" data-archive-item data-date="2026-06-10" data-topics="culture">
           <span>Opinion &middot; Culture</span>
           <div>
             <h2>AI slop is exhausting the public internet.</h2>
@@ -171,7 +197,7 @@
             <span class="card-cta">Read note</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/ai-infrastructure-not-bubble.html" data-archive-item data-topics="infrastructure culture">
+        <a class="edition-row" href="articles/ai-infrastructure-not-bubble.html" data-archive-item data-date="2026-06-10" data-topics="infrastructure culture">
           <span>Opinion &middot; Infrastructure</span>
           <div>
             <h2>The AI bubble question is really an infrastructure question.</h2>
@@ -179,7 +205,7 @@
             <span class="card-cta">Read article</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/apple-intelligence-naming-trap.html" data-archive-item data-topics="culture tools">
+        <a class="edition-row" href="articles/apple-intelligence-naming-trap.html" data-archive-item data-date="2026-06-10" data-topics="culture tools">
           <span>Article &middot; Apple</span>
           <div>
             <h2>Apple Intelligence still has a naming problem.</h2>
@@ -187,11 +213,7 @@
             <span class="card-cta">Read article</span>
           </div>
         </a>
-        <div class="section-heading notes-list-heading">
-          <p class="section-label">Still useful</p>
-          <h2>Earlier notes that still explain the room.</h2>
-        </div>
-        <a class="edition-row" href="articles/grok-build-terminal-agent.html" data-archive-item data-topics="tools">
+        <a class="edition-row" href="articles/grok-build-terminal-agent.html" data-archive-item data-date="2026-06-10" data-topics="tools">
           <span>Article &middot; Developer Tools</span>
           <div>
             <h2>Grok Build makes the coding-agent race feel official.</h2>
@@ -199,7 +221,7 @@
             <span class="card-cta">Read article</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/spacex-orbital-ai-compute.html" data-archive-item data-topics="infrastructure">
+        <a class="edition-row" href="articles/spacex-orbital-ai-compute.html" data-archive-item data-date="2026-06-10" data-topics="infrastructure">
           <span>Article &middot; Space</span>
           <div>
             <h2>AI data centers in orbit are absurd and logical.</h2>
@@ -207,7 +229,7 @@
             <span class="card-cta">Read article</span>
           </div>
         </a>
-        <a class="edition-row" href="articles/vibe-coding-expertise-leverage.html" data-archive-item data-topics="tools culture">
+        <a class="edition-row" href="articles/vibe-coding-expertise-leverage.html" data-archive-item data-date="2026-06-10" data-topics="tools culture">
           <span>Article &middot; Craft</span>
           <div>
             <h2>Vibe coding is leverage, not a replacement for judgment.</h2>
@@ -215,7 +237,7 @@
             <span class="card-cta">Read article</span>
           </div>
         </a>
-        <p class="archive-empty" data-archive-empty hidden>No matching notes yet.</p>
+        <p class="archive-empty" data-archive-empty hidden>No notes match that yet. Try a broader topic or a shorter search.</p>
       </section>
     </main>
 

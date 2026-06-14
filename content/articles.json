@@ -1,6 +1,32 @@
 {
-  "updated": "2026-06-13T18:00:00Z",
+  "updated": "2026-06-14T08:00:00Z",
   "items": [
+    {
+      "id": "fable-5-agi-access-politics",
+      "status": "published",
+      "type": "opinion",
+      "date": "2026-06-14",
+      "updated": "2026-06-14T08:00:00Z",
+      "title": "A Fable block would be a rehearsal for AGI politics.",
+      "tickerTitle": "A Fable block would be a rehearsal for AGI politics",
+      "summary": "A personal opinion on blocked model access, public trust and why the AGI debate needs rules before the emergency.",
+      "url": "articles/fable-5-agi-access-politics.html",
+      "image": "assets/img/social-card.png",
+      "topics": [
+        "models",
+        "policy",
+        "public-upside"
+      ],
+      "tags": ["models", "policy", "model-access", "public-upside"],
+      "sources": [
+        "https://www.anthropic.com/news",
+        "https://www.whitehouse.gov/ostp/",
+        "https://www.nist.gov/artificial-intelligence",
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "https://www.iea.org/reports/energy-and-ai"
+      ],
+      "xPost": "If strong models can be blocked now, AGI access cannot be improvised later. The appeal of AI needs broad upside, real audits, and rules that do not turn the future into a private room."
+    },
     {
       "id": "ai-upside-ledger",
       "status": "published",
